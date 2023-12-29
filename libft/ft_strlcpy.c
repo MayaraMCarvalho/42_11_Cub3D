@@ -6,14 +6,14 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 01:23:48 by macarval          #+#    #+#             */
-/*   Updated: 2022/04/21 01:29:40 by macarval         ###   ########.fr       */
+/*   Updated: 2023/12/29 14:50:21 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
-{	
+{
 	size_t	len;
 	size_t	control;
 	size_t	i;
@@ -32,6 +32,6 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 			i++;
 		}
 		dst[i] = '\0';
-	}	
+	}
 	return (len);
 }

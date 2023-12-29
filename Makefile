@@ -6,17 +6,17 @@
 #    By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/21 00:40:38 by macarval          #+#    #+#              #
-#    Updated: 2023/12/29 14:24:55 by macarval         ###   ########.fr        #
+#    Updated: 2023/12/29 15:15:33 by macarval         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			= cub3D
 
-FILE			= cub3d.c
+FILE			= cub3d.c events.c window.c
 FILE_BONUS		= cub3d_bonus.c
 
-FILE_PATH		= src/
-FILE_PATH_BONUS	= src_bonus/
+FILE_PATH		= src
+FILE_PATH_BONUS	= src_bonus
 OBJS_PATH		= obj
 HEADERS			= cub3d.h
 CFLAGS			= -Wall -Wextra -Werror -I.
@@ -38,7 +38,7 @@ bonus:			$(OBJS_PATH) $(OBJS_BONUS)
 
 $(NAME):		$(OBJS_PATH) $(OBJS) $(LIBFT)
 				@printf "Compiling $(NAME)\n"
-				@$(CC) $(CFLAGS) $(OBJS) $(LFLAGS) -o $(NAME)
+				@$(CC) $(CFLAGS) $(OBJS) $(LFLAGS) -o $(NAME) $(LIBFT) $(LIBS)
 				@echo "Cub3D created!!"
 
 $(OBJS_PATH):

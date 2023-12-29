@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 14:21:17 by macarval          #+#    #+#             */
-/*   Updated: 2023/12/29 15:42:55 by macarval         ###   ########.fr       */
+/*   Updated: 2023/12/29 17:40:13 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ int		handle_keypress(int keysym, t_data	*data);
 /* window.c */
 int		config_win(void);
 int		close_window(t_data *data);
-// void	set_variables(t_data *data);
 
 // /* Images */
 // void	create_img(t_data *data);

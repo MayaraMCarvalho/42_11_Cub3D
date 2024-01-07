@@ -1,34 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.c                                            :+:      :+:    :+:   */
+/*   error_msgs.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/04 22:15:03 by macarval          #+#    #+#             */
-/*   Updated: 2024/01/06 23:27:44 by macarval         ###   ########.fr       */
+/*   Created: 2024/01/06 23:25:22 by macarval          #+#    #+#             */
+/*   Updated: 2024/01/06 23:27:13 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#ifndef ERROR_MSGS_H
+# define ERROR_MSGS_H
 
-// talvez mandar uma struct para validate_file e assim setar qualquer
-// informação necessária do mapa
-int	main(int argc, char *argv[])
-{
-	if (argc == 2)
-	{
-		if (validate_file(argv))
-		{
-			printf("\nCub3D running!!!\n\n");
-			config_win();
-		}
-	}
-	else
-	{
-		printf("Enter a valid file\n");
-		printf(ERR_ARG);
-		exit (1);
-	}
-	return (0);
-}
+# define ERR_ARG "\nUsage: ./cub3D [*.cub]\nArgs: a map in format *.cub\n\n"
+
+#endif

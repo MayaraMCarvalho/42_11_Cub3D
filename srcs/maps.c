@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 09:00:14 by macarval          #+#    #+#             */
-/*   Updated: 2024/01/05 09:27:43 by macarval         ###   ########.fr       */
+/*   Updated: 2024/01/06 23:27:37 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,14 @@ int	validate_open(char *file)
 
 	map = ft_strjoin("maps/", file);
 	fd = open(map, O_RDONLY);
-	close(fd);
 	free (map);
 	if (fd == -1)
 	{
 		perror(file);
-		printf("\nUsage: ./cub3D [*.cub]\nArgs: a map in format *.cub\n\n");
+		printf(ERR_ARG);
 		return (0);
 	}
+	close(fd);
 	return (1);
 }
 
@@ -47,7 +47,7 @@ int	validate_extension(char *file)
 	if (strcmp_mod(extension, ".cub"))
 	{
 		printf("%s: Extension not supported\n", file);
-		printf("\nUsage: ./cub3D [*.cub]\nArgs: a map in format *.cub\n\n");
+		printf(ERR_ARG);
 		return (0);
 	}
 	return (1);

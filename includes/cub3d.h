@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 22:19:50 by macarval          #+#    #+#             */
-/*   Updated: 2024/01/06 22:46:06 by macarval         ###   ########.fr       */
+/*   Updated: 2024/01/06 23:28:10 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <X11/X.h>
 
 # include "libft.h"
+# include "error_msgs.h"
 
 # define MLX_ERROR 1
 

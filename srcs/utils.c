@@ -1,34 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.c                                            :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/04 22:15:03 by macarval          #+#    #+#             */
-/*   Updated: 2024/01/05 11:48:33 by macarval         ###   ########.fr       */
+/*   Created: 2024/01/05 09:17:12 by macarval          #+#    #+#             */
+/*   Updated: 2024/01/05 09:22:22 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-// talvez mandar uma struct para validate_file e assim setar qualquer
-// informação necessária do mapa
-int	main(int argc, char *argv[])
+int	strcmp_mod(const char *s1, const char *s2)
 {
-	if (argc == 2)
+	size_t	i;
+	size_t	len;
+
+	if (s1 && s2)
 	{
-		if (validate_file(argv))
+		i = 0;
+		len = ft_strlen(s1);
+		if (len != ft_strlen(s2))
+			return (1);
+		while (i < len)
 		{
-			printf("\nCub3D running!!!\n\n");
-			config_win();
+			if (s1[i] != s2[i] && (s1[i] != '\0' || s2[i] != '\0'))
+			{
+				return ((unsigned char) s1[i] - (unsigned char) s2[i]);
+			}
+			i++;
 		}
+		return (0);
 	}
-	else
-	{
-		printf("Enter a valid file\n");
-		printf("\nUsage: ./cub3D [*.cub]\nArgs: a map in format *.cub\n\n");
-		exit (1);
-	}
-	return (0);
+	return (1);
 }

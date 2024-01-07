@@ -1,9 +1,11 @@
-NAME			= cub3d
+NAME			= cub3D
 
 CFLAGS			= -g3 -g -Wall -Werror -Wextra
 LFLAGS			= -lft -lmlx -lX11 -lXext -lm -MMD -MP
 INCLUDES		= -I./includes -I$(LIBFT_INC) -I$(MLX_PATH)
 LIBS			= -L./libs/libft -L./libs/minilibx
+
+# -fsanitize=address -lbsd verificar a necessidade dessas flags
 
 #libft
 LIBFT_PATH		= ./libs/libft
@@ -23,13 +25,7 @@ INIT_PATH		= init/
 
 #source codes
 SRC_DIR			=	./srcs/
-SRC_LIST		=	$(WINDOW_PATH)window.c		\
-					$(WINDOW_PATH)controls.c	\
-					$(RENDER_PATH)draw.c		\
-					$(RENDER_PATH)bresenham.c	\
-					$(RAYCAST_PATH)raycasting.c	\
-					$(INIT_PATH)player.c		\
-					utils.c cub3d.c
+SRC_LIST		=	cub3d.c events.c maps.c utils.c window.c
 SRCS			= $(addprefix $(SRC_DIR),$(SRC_LIST))
 
 #objects
@@ -76,7 +72,7 @@ $(OBJS_DIR)%.o: $(SRC_DIR)%.c
 clean:
 	@make -sC $(LIBFT_PATH) clean
 #	@make -sC $(MLX_PATH) clean
-	@rm -rf $(OBJS_DIR)	
+	@rm -rf $(OBJS_DIR)
 
 fclean: clean
 	@make -sC $(LIBFT_PATH) fclean

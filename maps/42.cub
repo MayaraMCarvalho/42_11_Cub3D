@@ -1,9 +1,9 @@
-NO ./textures/42_NO.xpm
+      NO       ./textures/42_NO.xpm            
 SO ./textures/42_SO.xpm
-WE ./textures/42_WE.xpm
+     WE ./textures/42_WE.xpm
 EA ./textures/42_EA.xpm
 
-F 42,42,42
+F    42,42,42
 C 142,142,142
 
 111111111111111

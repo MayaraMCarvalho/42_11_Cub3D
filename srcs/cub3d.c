@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 22:15:03 by macarval          #+#    #+#             */
-/*   Updated: 2024/01/09 18:39:01 by macarval         ###   ########.fr       */
+/*   Updated: 2024/01/11 19:26:38 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,11 @@ void	inicialize(t_data *game)
 	game->info.south = NULL;
 	game->info.west = NULL;
 	game->info.east = NULL;
-	game->info.map = NULL;
+	game->info.floor.r = -1;
+	game->info.floor.g = -1;
+	game->info.floor.b = -1;
+	game->info.ceiling.r = -1;
+	game->info.ceiling.g = -1;
+	game->info.ceiling.b = -1;
+	game->info.data.map = NULL;
 }

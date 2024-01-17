@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 15:58:38 by macarval          #+#    #+#             */
-/*   Updated: 2024/01/09 18:36:38 by macarval         ###   ########.fr       */
+/*   Updated: 2024/01/16 16:02:26 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void	free_split(char ***split)
 
 void	free_game(t_data *game)
 {
+	if (game->file_name)
+		free(game->file_name);
 	if (game->info.north)
 		free(game->info.north);
 	if (game->info.south)
@@ -34,14 +36,25 @@ void	free_game(t_data *game)
 		free(game->info.west);
 	if (game->info.east)
 		free(game->info.east);
-	if (game->info.map)
-		free(game->info.map);
+	if (game->info.data.map)
+		free_map(game);
 }
 
-void	exit_err(char *line, t_data *game, int exit_code)
+void	free_map(t_data *game)
 {
-	printf(ERR_SET);
+	int	i;
+
+	i = -1;
+	while (++i < game->info.data.map_height)
+		free(game->info.data.map[i]);
+	free(game->info.data.map);
+}
+
+void	exit_err(char *line, t_data *game, int exit_code, char *err)
+{
+	printf("%s", err);
 	free_game(game);
-	free(line);
+	if (line)
+		free(line);
 	exit (exit_code);
 }

@@ -32,7 +32,7 @@ run_test() {
     if [ "$full_output" = "$expected_output" ]; then
         # Incrementar o contador de testes bem-sucedidos
         ((successful_tests++))
-        echo -e "\n\e[32mTeste $test_number: OK\e[0]\nEntrada=\"$PROGRAM $input\"\n\n"
+        echo -e "\n\e[32mTeste $test_number: OK\e[0]\nEntrada=\"$PROGRAM $input\""
     else
         echo -e "\e[31m\nTeste $test_number: X\e[0m\nEntrada=\"$input\"\n\nSaída Obtida=\n\"$full_output\"\n\nSaída Esperada=\n\"$expected_output\"\n"
     fi
@@ -50,21 +50,21 @@ Usage: ./cub3D [*.cub]
 Args: a map in format *.cub"
 
 #2
-chmod 000 maps/lock.cub
-run_test "lock.cub" "lock.cub: Permission denied
+chmod 000 maps/wrong_maps/lock.cub
+run_test "wrong_maps/lock.cub" "wrong_maps/lock.cub: Permission denied
 
 Usage: ./cub3D [*.cub]
 Args: a map in format *.cub"
-chmod 777 maps/lock.cub
+chmod 777 maps/wrong_maps/lock.cub
 
 #3
-run_test "text.txt" "text.txt: Extension not supported
+run_test "wrong_maps/text.txt" "wrong_maps/text.txt: Extension not supported
 
 Usage: ./cub3D [*.cub]
 Args: a map in format *.cub"
 
 #4
-run_test "test" "test: Extension not supported
+run_test "wrong_maps/test" "wrong_maps/test: Extension not supported
 
 Usage: ./cub3D [*.cub]
 Args: a map in format *.cub"
@@ -74,6 +74,137 @@ run_test "no_exist.cub" "no_exist.cub: No such file or directory
 
 Usage: ./cub3D [*.cub]
 Args: a map in format *.cub"
+
+#6
+run_test "wrong_maps/color_less.cub" "
+Error
+Invalid Color Settings"
+
+#7
+run_test "wrong_maps/color_more.cub" "
+Error
+Configuration items are more"
+
+#8
+run_test "wrong_maps/color_more2.cub" "
+Error
+Configuration items are more"
+
+#9
+run_test "wrong_maps/empty.cub" "
+Error
+File empty"
+
+#10
+run_test "wrong_maps/map_identifier_less.cub" "
+Error
+Map without identifier"
+
+#11
+run_test "wrong_maps/map_more_letter.cub" "
+Error
+Map with disallowed identifier"
+
+#12
+run_test "wrong_maps/map_open.cub" "
+Error
+Map is open"
+
+#13
+run_test "wrong_maps/map_open2.cub" "
+Error
+Map is open"
+
+#14
+run_test "wrong_maps/map_open3.cub" "
+Error
+Map is open"
+
+#15
+run_test "wrong_maps/missing.cub" "
+Error
+Invalid Settings"
+
+#16
+run_test "wrong_maps/repeated_tex.cub" "
+Error
+Invalid Texture Settings"
+
+#17
+run_test "wrong_maps/texture_less.cub" "
+Error
+Configuration items are missing"
+
+#18
+run_test "wrong_maps/texture_more.cub" "
+Error
+Configuration items are more"
+
+#19
+run_test "wrong_maps/map_open4.cub" "
+Error
+Map is open"
+
+#20
+run_test "wrong_maps/repeated_color.cub" "
+Error
+Invalid Color Settings"
+
+#21
+run_test "wrong_maps/color_less2.cub" "
+Error
+Invalid Color Settings"
+
+#22
+run_test "wrong_maps/color_less3.cub" "
+Error
+Invalid Color Settings"
+
+#23
+run_test "wrong_maps/color_more3.cub" "
+Error
+Configuration items are more"
+
+#24
+run_test "wrong_maps/color_more4.cub" "
+Error
+Configuration items are more"
+
+#25
+run_test "wrong_maps/repeated_tex2.cub" "
+Error
+Invalid Texture Settings"
+
+#26
+run_test "wrong_maps/repeated_color2.cub" "
+Error
+Invalid Color Settings"
+
+#27
+run_test "wrong_maps/map_open5.cub" "
+Error
+Map is open"
+
+#26
+run_test "wrong_maps/map_open6.cub" "
+Error
+Map is open"
+
+#28
+run_test "wrong_maps/map_open7.cub" "
+Error
+Map is open"
+
+#28
+run_test "wrong_maps/map_open8.cub" "
+Error
+More than one map identifier"
+
+#29
+run_test "wrong_maps/map_more_letter2.cub" "
+Error
+Map with disallowed identifier"
+
 
 # Calcular porcentagem de acertos
 percentage=$(echo "scale=2; $successful_tests / $total_tests * 100" | bc)

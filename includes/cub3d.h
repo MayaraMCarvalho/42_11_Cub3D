@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 22:19:50 by macarval          #+#    #+#             */
-/*   Updated: 2024/01/09 18:51:48 by macarval         ###   ########.fr       */
+/*   Updated: 2024/01/16 17:12:45 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,22 +56,31 @@ typedef struct s_color
 
 typedef struct s_map
 {
+	int		map_init;
+	int		map_width;
+	int		map_height;
+	char	**map;
+}	t_map;
+
+typedef struct s_set
+{
 	char		*north;
 	char		*south;
 	char		*west;
 	char		*east;
 	t_color		floor;
 	t_color		ceiling;
-	int			**map;
-}	t_map;
+	t_map		data;
+}	t_set;
 
 typedef struct s_data
 {
 	void		*mlx;
 	void		*win;
-	int			file;
+	int			fd;
+	char		*file_name;
 	t_img		img;
-	t_map		info;
+	t_set		info;
 	int			exit_code;
 }	t_data;
 
@@ -80,28 +89,36 @@ void	inicialize(t_data *game);
 /* event.c */
 int		handle_keypress(int keysym, t_data	*data);
 
-/* file.c */
-void	validate_extension(char *file);
-void	validate_open(char *file, t_data *game);
-void	validations(char *argv[], t_data *game);
-
 /* free.c */
+void	free_map(t_data *game);
 void	free_game(t_data *game);
 void	free_split(char ***split);
-void	exit_err(char *line, t_data *game, int exit_code);
+void	exit_err(char *line, t_data *game, int exit_code, char *err);
 
 /* maps.c */
-int		validate_map(t_data *game);
+void	get_map(t_data *game);
+void	alloc_map(t_data *game);
+void	process_map(t_data *game, int final_set);
+char	*get_map_init(t_data *game, int final_set);
+int		check_neighbors(t_data *game, int j, int i, char *pattern);
 
 /* process.c */
-void	process_file(t_data *game);
+int		process_settings(t_data *game);
 int		get_color(char	*line, t_color *color);
 int		process_line(char *line, t_data *game);
-int		set_variables(t_data *game, char **split);
+int		get_textures(t_data *game, char **split);
+int		set_variables(t_data *game, char **split, char *line);
 
 /* util.c */
 char	*strchr_rev(const char *str, int c);
 int		strcmp_mod(const char *s1, const char *s2);
+
+/* validation.c */
+void	validate_map(t_data *game);
+void	validate_extension(char *file);
+void	validate_open(char *file, t_data *game);
+void	validations(char *argv[], t_data *game);
+int		validate_errors(t_data *game, int j, int i);
 
 /* window.c */
 void	config_win(t_data *data);

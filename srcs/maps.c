@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 09:03:43 by macarval          #+#    #+#             */
-/*   Updated: 2024/01/16 17:05:36 by macarval         ###   ########.fr       */
+/*   Updated: 2024/01/18 14:01:20 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ void	get_map(t_data *game)
 		free(line);
 		line = get_next_line(game->fd);
 	}
+	close(game->fd);
 }
 
 void	alloc_map(t_data *game)

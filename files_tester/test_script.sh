@@ -185,22 +185,22 @@ run_test "wrong_maps/map_open5.cub" "
 Error
 Map is open"
 
-#26
+#28
 run_test "wrong_maps/map_open6.cub" "
 Error
 Map is open"
 
-#28
+#29
 run_test "wrong_maps/map_open7.cub" "
 Error
 Map is open"
 
-#28
+#30
 run_test "wrong_maps/map_open8.cub" "
 Error
 More than one map identifier"
 
-#29
+#31
 run_test "wrong_maps/map_more_letter2.cub" "
 Error
 Map with disallowed identifier"

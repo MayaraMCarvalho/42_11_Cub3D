@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 15:17:55 by macarval          #+#    #+#             */
-/*   Updated: 2024/01/09 18:39:45 by macarval         ###   ########.fr       */
+/*   Updated: 2024/02/05 12:32:31 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,10 @@ void	config_win(t_data *game)
 {
 	game->mlx = mlx_init();
 	if (game->mlx == NULL)
-	{
-		printf(ERR_MLX_INIT);
-		game->exit_code = 2;
-		close_window(game);
-	}
+		mlx_errors(game, ERR_MLX_INIT, 2);
 	game->win = mlx_new_window(game->mlx, WIN_W, WIN_H, "*** Cub3D ***");
 	if (game->win == NULL)
-	{
-		printf(ERR_MLX_WIN);
-		game->exit_code = 3;
-		close_window(game);
-	}
+		mlx_errors(game, ERR_MLX_WIN, 3);
 	// create_img(game);
 	// mlx_loop_hook(game->mlx, &render, game);
 	game->exit_code = 0;
@@ -46,4 +38,14 @@ int	close_window(t_data	*game)
 	free(game->mlx);
 	free_game(game);
 	exit (game->exit_code);
+}
+
+void	mlx_errors(t_data *game, char *msg_error, int exit_code)
+{
+	if (errno == -1)
+		perror(msg_error);
+	else
+		printf("%s", msg_error);
+	free_game(game);
+	exit (exit_code);
 }

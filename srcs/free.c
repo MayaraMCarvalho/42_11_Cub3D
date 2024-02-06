@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 15:58:38 by macarval          #+#    #+#             */
-/*   Updated: 2024/02/05 11:58:53 by macarval         ###   ########.fr       */
+/*   Updated: 2024/01/18 19:42:29 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ void	free_game(t_data *game)
 		free(game->info.east);
 	if (game->info.data.map)
 		free_map(game);
+	if (game->mlx)
+		free(game->mlx);
 }
 
 void	free_map(t_data *game)

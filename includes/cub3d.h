@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 22:19:50 by macarval          #+#    #+#             */
-/*   Updated: 2024/02/05 12:33:45 by macarval         ###   ########.fr       */
+/*   Updated: 2024/01/25 21:11:42 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <errno.h>
+# include <math.h>
 
 # include <mlx.h>
 # include <X11/keysym.h>
@@ -26,6 +27,8 @@
 
 # include "libft.h"
 # include "error_msgs.h"
+# include "exec2d.h"
+# include "keycode.h"
 
 /* Window */
 # define WIN_W 1200
@@ -37,10 +40,16 @@
 // # define RIGHT_CLICK 3
 // # define SCROLL_UP 4
 // # define SCROLL_DOWN 5
+typedef struct s_player
+{
+	float	x;
+	float	y;
+	float	ang;
+}	t_player;
 
 typedef struct s_img
 {
-	void	*mlx_img;
+	void	*img;
 	char	*addr;
 	int		bpp;
 	int		line_len;
@@ -82,6 +91,8 @@ typedef struct s_data
 	t_img		img;
 	t_set		info;
 	int			exit_code;
+	char		*exit_str;
+	t_player	player;
 }	t_data;
 
 void	inicialize(t_data *game);
@@ -112,6 +123,8 @@ int		set_variables(t_data *game, char **split, char *line);
 /* util.c */
 char	*strchr_rev(const char *str, int c);
 int		strcmp_mod(const char *s1, const char *s2);
+void	terminate(t_data *game);
+
 
 /* validation.c */
 void	validate_map(t_data *game);
@@ -121,9 +134,9 @@ void	validations(char *argv[], t_data *game);
 int		validate_errors(t_data *game, int j, int i);
 
 /* window.c */
-void	config_win(t_data *data);
+void	init_window(t_data *game);
+void	exec_window(t_data *game);
 int		close_window(t_data *data);
-void	mlx_errors(t_data *game, char *msg_error, int exit_code);
 
 // /* Images */
 // void	create_img(t_data *data);

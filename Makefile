@@ -26,7 +26,7 @@ INIT_PATH		= init/
 #source codes
 SRC_DIR			=	./srcs/
 SRC_LIST		=	cub3d.c events.c free.c maps.c process.c \
-					utils.c validation.c window.c \
+					utils.c validation.c window.c exec2d.c utils2d.c\
 
 SRCS			= $(addprefix $(SRC_DIR),$(SRC_LIST))
 

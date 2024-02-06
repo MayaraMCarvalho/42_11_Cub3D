@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 09:17:12 by macarval          #+#    #+#             */
-/*   Updated: 2024/01/09 16:42:35 by macarval         ###   ########.fr       */
+/*   Updated: 2024/01/19 18:29:19 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,14 @@ char	*strchr_rev(const char *str, int c)
 			return ((char *)str);
 	}
 	return (NULL);
+}
+
+void	terminate(t_data *game)
+{
+	free_game(game);
+	if (errno == -1)
+		perror("error");
+	else
+		ft_putendl_fd("error", 2);
+	exit(1);
 }

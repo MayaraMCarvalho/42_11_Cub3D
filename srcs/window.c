@@ -3,27 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   window.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 15:17:55 by macarval          #+#    #+#             */
-/*   Updated: 2024/02/05 12:32:31 by macarval         ###   ########.fr       */
+/*   Updated: 2024/01/25 21:09:40 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	config_win(t_data *game)
+static void validation_window_alloc(t_data *game)
+{
+	if (game->mlx == NULL)
+		game->exit_code = 2;
+	else if (game->win == NULL)
+		game->exit_code = 3;
+	else if (game->img.img == NULL)
+		game->exit_code = 4;
+	else if (game->img.addr == NULL)
+		game->exit_code = 5;
+	if (game->exit_code != 0)
+		close_window(game);
+}
+
+void	init_window(t_data *game)
 {
 	game->mlx = mlx_init();
-	if (game->mlx == NULL)
-		mlx_errors(game, ERR_MLX_INIT, 2);
 	game->win = mlx_new_window(game->mlx, WIN_W, WIN_H, "*** Cub3D ***");
-	if (game->win == NULL)
-		mlx_errors(game, ERR_MLX_WIN, 3);
-	// create_img(game);
-	// mlx_loop_hook(game->mlx, &render, game);
-	game->exit_code = 0;
+	game->img.img = mlx_new_image(game->mlx, WIN_W, WIN_H);
+	game->img.addr = mlx_get_data_addr(game->img.img, &(game->img.bpp),
+			&(game->img.line_len), &(game->img.endian));
+	validation_window_alloc(game);
+}
+
+void	exec_window(t_data *game)
+{
 	printf("\nCub3D running!!!\n\n");
+	mlx_put_image_to_window(game->mlx, game->win, game->img.img, 0, 0);
 	mlx_key_hook(game->win, &handle_keypress, game);
 	mlx_hook(game->win, DestroyNotify, NoEventMask, &close_window, game);
 	// mlx_mouse_hook(game->win, &handle_mouse, game);
@@ -33,19 +49,8 @@ void	config_win(t_data *game)
 int	close_window(t_data	*game)
 {
 	mlx_destroy_window(game->mlx, game->win);
-	// mlx_destroy_image(game->mlx, game->img.mlx_img);
+	mlx_destroy_image(game->mlx, game->img.img);
 	mlx_destroy_display(game->mlx);
-	free(game->mlx);
-	free_game(game);
-	exit (game->exit_code);
-}
-
-void	mlx_errors(t_data *game, char *msg_error, int exit_code)
-{
-	if (errno == -1)
-		perror(msg_error);
-	else
-		printf("%s", msg_error);
-	free_game(game);
-	exit (exit_code);
+	terminate(game);
+	return (0);
 }

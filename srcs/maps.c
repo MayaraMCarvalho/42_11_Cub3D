@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   maps.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 09:03:43 by macarval          #+#    #+#             */
-/*   Updated: 2024/01/18 14:01:20 by macarval         ###   ########.fr       */
+/*   Updated: 2024/01/25 19:04:13 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	process_map(t_data *game, int final_set)
 	int		width;
 
 	line = get_map_init(game, final_set);
-	game->info.data.map_height = 1;
+	game->info.data.map_height = 0;
 	game->info.data.map_width = ft_strlen(line) - 1;
 	while (line)
 	{
@@ -81,7 +81,6 @@ void	get_map(t_data *game)
 		free(line);
 		line = get_next_line(game->fd);
 	}
-	close(game->fd);
 }
 
 void	alloc_map(t_data *game)

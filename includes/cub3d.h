@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 22:19:50 by macarval          #+#    #+#             */
-/*   Updated: 2024/01/16 17:12:45 by macarval         ###   ########.fr       */
+/*   Updated: 2024/02/05 12:33:45 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,7 @@ int		validate_errors(t_data *game, int j, int i);
 /* window.c */
 void	config_win(t_data *data);
 int		close_window(t_data *data);
+void	mlx_errors(t_data *game, char *msg_error, int exit_code);
 
 // /* Images */
 // void	create_img(t_data *data);

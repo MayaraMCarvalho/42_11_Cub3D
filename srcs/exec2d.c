@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 18:42:33 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/02/05 22:00:46 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/02/13 11:19:38 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	draw_player(t_player player, t_img *img)
 	init.x = player.x + 2;
 	init.y = player.y + 2;
 	dest.x = player.x + (cos(player.ang) * 15) + 2;
-	dest.y = player.y + (sin(player.ang) * 15) + 2;
+	dest.y = player.y + (-sin(player.ang) * 15) + 2;
 	bresenham(img, init, dest);
 }
 
@@ -56,9 +56,9 @@ void	init_player(t_data *game,int x, int y, t_img *img)
 	else if (game->info.data.map[y][x] == 'S')
 		game->player.ang = 3 * M_PI / 2;
 	else if (game->info.data.map[y][x] == 'W')
-		game->player.ang = M_PI;
+		game->player.ang = 0.0001;
 	else if (game->info.data.map[y][x] == 'E')
-		game->player.ang = 0;
+		game->player.ang = 0.00001;
 	game->player.x = (x + 0.5) * SIZE;
 	game->player.y = (y + 0.5) * SIZE;
 	draw_player(game->player, img);
@@ -147,176 +147,189 @@ int	key_press(int key, t_data2d *data)
 		exit_button(data);
 	if (key == W_KEY)
 	{
-		game->player.y += sin(game->player.ang) * SPEED;
+		game->player.y += -sin(game->player.ang) * SPEED;
 		game->player.x += cos(game->player.ang) * SPEED;
 	}
 	if (key == S_KEY)
 	{
-		game->player.y -= sin(game->player.ang) * SPEED;
+		game->player.y -= -sin(game->player.ang) * SPEED;
 		game->player.x -= cos(game->player.ang) * SPEED;
 	}
 	if (key == A_KEY)
-		game->player.x += SPEED;
-	if (key == D_KEY)
 		game->player.x -= SPEED;
+	if (key == D_KEY)
+		game->player.x += SPEED;
 	if (key == LEFT_KEY)
-		game->player.ang -= 0.1;
-	if (key == RIGHT_KEY)
 		game->player.ang += 0.1;
-
+	if (key == RIGHT_KEY)
+		game->player.ang -= 0.1;
+	
 	if (game->player.ang < 0)
 		game->player.ang += 2 * M_PI;
-	if (game->player.ang > 2 * M_PI)
+	if (game->player.ang > (2 * M_PI -0.00001))
 		game->player.ang -= 2 * M_PI;
+	
 	draw(data);
 	return (0);
 }
 
 /***************************************************/
 // Raycast
-#define FOV			M_PI/3
+#define FOV			60
 #define HALF_FOV	FOV/2
-#define MAX_RAYS	480
+#define MAX_RAYS	460
 #define MAX_DELPH	560
 
-// void	draw_raycast(t_data2d *data)
-// {
-// 	// t_raycast	ray;
-// 	float		x_map = data->game->player.x / SIZE;
-// 	// float		y_map = data->game->player.y / SIZE;
-// 	float		px = data->game->player.x;
-// 	float		py = data->game->player.y;
-// 	float		ray_ang = data->game->player.ang - HALF_FOV + 0.0001;
-// 	float		sin_a;
-// 	float		cos_a;
-// 	float			dx;
-// 	float			dy;
-// 	float		ddepth;
-// 	float		depth_ver;
-// 	// float		depth_hor;
+int dist(int x1,int y1, int x2,int y2)
+{
+	return (sqrt((x2-x1)*(x2-x1) + (y2-y1)*(y2-y1)));
+}
 
-// 	for (int i = 0; i < MAX_RAYS; i++)
-// 	{
-// 		sin_a = sin(ray_ang);
-// 		cos_a = cos(ray_ang);
+void	h_rays(t_raycast *ray, t_player *p, t_sat map)
+{
+	ray->aTan = 1 / tan(ray->ang);
+	if(ray->ang < M_PI){
+		ray->hor[1] = (((int)p->y>>5)<<5) -0.0001;
+		ray->hor[0] = (p->y - ray->hor[1]) * ray->aTan + p->x;
+		ray->offset[1] = -SIZE;
+		ray->offset[0] = -ray->offset[1] * ray->aTan;
+	}
+	else if (ray->ang > M_PI)
+	{ 
+		ray->hor[1] = (((int)p->y>>5)<<5)+SIZE;
+		ray->hor[0] = (p->y - ray->hor[1]) * ray->aTan + p->x;
+		ray->offset[1]= SIZE;
+		ray->offset[0] = -ray->offset[1] * ray->aTan;
+	}
+	else if (ray->ang == 0 || ray->ang == M_PI)
+	{
+		ray->hor[0] = p->x;
+		ray->hor[1] = p->y;
+		ray->dof = ray->max_dof;
+	}
+	
+	while (ray->dof < ray->max_dof)
+	{
+		ray->map[0] = (int)(ray->hor[0])>>5;
+		ray->map[1] = (int)(ray->hor[1])>>5;
+		if (ray->map[0] >= 0 && ray->map[1] >= 0	\
+			&& ray->map[0] < map.data.map_width		\
+			&& ray->map[1] < map.data.map_height	\
+			&& map.data.map[ray->map[1]][ray->map[0]] == '1')
+		{
+			// ray->hor[2] = cos(ray->ang) * (ray->hor[0] - p->x) - sin(ray->ang) * (ray->hor[1] - p->y); 
+			ray->hor[2] = dist(p->x, p->y, ray->hor[0], ray->hor[1]); 
+			ray->dof = ray->max_dof;
+		}
+		else
+		{
+			ray->hor[0] += ray->offset[0];
+			ray->hor[1] += ray->offset[1];
+			ray->dof++;
+		}
+	}
+	ray->dof = 0;
+}
 
-// 		//left
-// 		float x_ver = (cos_a > 0) ? x_map + 1 : x_map - 0.00001;
-// 		dx = (cos_a > 0) ? 1 : -1;
-		
-// 		depth_ver = (x_ver - px) / cos_a;
-// 		float y_ver = py + depth_ver * sin_a;
+void	v_rays(t_raycast *ray, t_player *p, t_sat map)
+{
+	ray->aTan = tan(ray->ang);
+	if(ray->ang < M_PI / 2 || ray->ang > 3 * M_PI / 2){
+		ray->ver[0] = (((int)p->x>>5)<<5) + SIZE;
+		ray->ver[1] = (p->x - ray->ver[0]) * ray->aTan + p->y;
+		ray->offset[0] = SIZE;
+		ray->offset[1] = -ray->offset[0] * ray->aTan;
+	}
+	else if (ray->ang > M_PI / 2 && ray->ang < 3 * M_PI / 2)
+	{ 
+		ray->ver[0] = (((int)p->x>>5)<<5) + -0.0001;
+		ray->ver[1] = (p->x - ray->ver[0]) * ray->aTan + p->y;
+		ray->offset[0] = -SIZE;
+		ray->offset[1] = -ray->offset[0] * ray->aTan;
+	}
+	else if (ray->ang == M_PI / 2 || ray->ang == 3 * M_PI / 2)
+	{
+		ray->ver[0] = p->x;
+		ray->ver[1] = p->y;
+		ray->dof = ray->max_dof;
+	}
+	while (ray->dof < ray->max_dof)
+	{
+		ray->map[0] = (int)(ray->ver[0])>>5;
+		ray->map[1] = (int)(ray->ver[1])>>5;
+		if (ray->map[0] >= 0 && ray->map[1] >= 0	\
+			&& ray->map[0] < map.data.map_width		\
+			&& ray->map[1] < map.data.map_height	\
+			&& map.data.map[ray->map[1]][ray->map[0]] == '1')
+		{
+			// ray->ver[2] = cos(ray->ang) * (ray->ver[0] - p->x) - sin(ray->ang) * (ray->ver[1] - p->y);
+			ray->ver[2] = dist(p->x, p->y, ray->ver[0], ray->ver[1]);
+			ray->dof = ray->max_dof;
+		}
+		else
+		{
+			ray->ver[0] += ray->offset[0];
+			ray->ver[1] += ray->offset[1];
+			ray->dof++;
+		}
+	}
+	ray->dof = 0;
+}
 
-// 		ddepth = dx / cos_a;
-// 		dy = ddepth * sin_a;
-// 		printf("dx: %f - dy: %f\n", dx, dy);
-// 		for (int j = 0; j < MAX_DELPH; j++)
-// 		{
-// 			printf("x_v: %d - %f\n", (int)(x_ver / SIZE),x_ver);
-// 			printf("y_v: %d - %f\n", (int)(y_ver / SIZE),y_ver);
-// 			if ((int)(x_ver / SIZE) >= 15 || (int)(y_ver / SIZE) >= 15)
-// 				break;
-// 			x_ver += dx;
-// 			y_ver += dy;
-					
-// 		}
-// 		ray_ang += (FOV / MAX_RAYS);
-// 			t_point	init;
-// 			t_point	dest;
-// 			init.x = data->game->player.x;
-// 			init.y = data->game->player.y;
-// 			dest.x = (int)x_ver;
-// 			dest.y = (int)y_ver;
-// 			bresenham(data->img, init, dest);
-// 	}
-// }
+void	init_raycast(t_raycast *ray, t_data2d *data)
+{
+	ray->ang = data->game->player.ang + (M_PI / 6);
+	ray->rays = 0;
+	if (data->game->info.data.map_height > data->game->info.data.map_width)
+		ray->max_dof = data->game->info.data.map_height;
+	else
+		ray->max_dof = data->game->info.data.map_width;
+}
 
-		// t_point	init;
-		// t_point	dest;
-		
-		// init.x = data->game->player.x;
-		// init.y = data->game->player.y;
-		// dest.x = cos_a + 50000;
-		// dest.y = sin_a + 50000;
-		// bresenham(data->img, init, dest);
-float degToRad(int a) { return a*M_PI/180.0;}
-int FixAng(int a){ if(a>359){ a-=360;} if(a<0){ a+=360;} return a;}
+void	reset_params(t_raycast *ray, t_data2d *data)
+{
+	ray->hor[0] = data->game->player.x;
+	ray->hor[1] = data->game->player.y;
+	ray->hor[2] = 1000000000;
+	ray->ver[0] = data->game->player.x;
+	ray->ver[1] = data->game->player.y;
+	ray->ver[2] = 1000000000;
+	ray->offset[0] = 0;
+	ray->offset[1] = 0;
+	ray->aTan = 0;
+	ray->dof = 0;
+	if (ray->ang < 0)
+		ray->ang += 2 * M_PI;
+	if (ray->ang > 2 * M_PI)
+		ray->ang -= 2 * M_PI;
+}
 
 void	draw_raycast(t_data2d *data)
 {
-	// int r,mx,my,mp,dof,side;
-	// float vx,vy,rx,ry,ra,xo,yo,disV,disH;
-	// float px,py,pa;
+	t_raycast ray;
 	
-	int r;
-	float rx,ry,ra,xo,yo;
-	float px,py,pa;
-	
-	pa = data->game->player.ang;
-	px = data->game->player.x;
-	py = data->game->player.y;
-	ra = data->game->player.ang;
-
-	for(r=0;r<60;r++)
+	init_raycast(&ray, data);
+	while (ray.rays < MAX_RAYS)
 	{
-		printf("ang: %f\n", ra);
-		(void)pa;
-		(void)yo;
-
-		//---Vertical--- 
-		// dof=0; side=0; disV=100000;
-		float aTan = -1 / tan(ra);
-		if(ra > M_PI)
-		{
-			ry = (((int)py>>5)<<5) -0.0001;
-			rx = (py-ry) * aTan + px;
-			xo = -SIZE;
-			yo = -xo*aTan;
-		}//looking left
-		if(ra < M_PI){
-			printf("here\n");
-			ry = (((int)px>>5)<<5) + SIZE;
-			rx = (py-ry) * aTan + px;
-			yo = SIZE;
-			xo = -yo * aTan;
-		}//looking right
-		if (ra == 0 || ra == M_PI) {
-			rx=px;
-			ry=py;
-			// dof=8;
-		}//looking up or down. no hit  
-
-	// while(dof<8) 
-	// { 
-	// mx=(int)(rx)>>6; my=(int)(ry)>>6; mp=my*mapX+mx;                     
-	// if(mp>0 && mp<mapX*mapY && map[mp]==1){ dof=8; disV=cos(degToRad(ra))*(rx-px)-sin(degToRad(ra))*(ry-py);}//hit         
-	// else{ rx+=xo; ry+=yo; dof+=1;}                                               //check next horizontal
-	// } 
-	// 	vx=rx; vy=ry;
-	
-		// while(dof<8) 
-		// { 
-		// 	mx=(int)(rx)>>6; my=(int)(ry)>>6; mp=my*mapX+mx;                          
-		// 	if(mp>0 && mp<mapX*mapY && map[mp]==1)
-		// 	{
-		// 		dof=8;
-		// 		disH=cos(degToRad(ra))*(rx-px)-sin(degToRad(ra))*(ry-py);
-		// 	}//hit         
-		// 	else
-		// 	{
-		// 		rx+=xo;
-		// 		ry+=yo;
-		// 		dof+=1;
-		// 	}//check next horizontal
-		// }
-
+		reset_params(&ray, data);
+		h_rays(&ray, &(data->game)->player, data->game->info);
+		v_rays(&ray, &(data->game)->player, data->game->info);
+		ray.ang -= 0.017453 / (MAX_RAYS / FOV);
+		ray.rays++;
+		
 		t_point	init;
 		t_point	dest;
 		init.x = data->game->player.x + 2;
 		init.y = data->game->player.y + 2;
-		dest.x = rx + 2;
-		dest.y = ry + 2;
+		if(ray.ver[2] < ray.hor[2])
+		{		
+			dest.x = ray.ver[0] + 2;
+			dest.y = ray.ver[1] + 2;
+		}
+		else{
+			dest.x = ray.hor[0] + 2;
+			dest.y = ray.hor[1] + 2;
+		}
 		bresenham(data->img, init, dest);
-		break;
 	}
 }

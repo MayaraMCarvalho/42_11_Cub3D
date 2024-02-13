@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 19:08:22 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/01/30 19:01:10 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/02/13 10:39:56 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,19 @@
 typedef struct s_data	t_data;
 typedef struct s_img	t_img;
 typedef struct s_player	t_player;
+typedef struct s_set	t_sat;
 
-typedef struct s_raycast{
-	int		color;
+typedef	struct s_raycast
+{
+	float	hor[3];
+	float	ver[3];
+	float	offset[2];
 	float	ang;
-	float	x;
-	float	y;
-	int		world_limit;
-	int		in_world;
-	float	offset_x;
-	float	offset_y;
-	float	delta_ver;
-	float	delta_hor;
+	float	aTan;
+	int		rays;
+	int		dof;
+	int		max_dof;
+	int		map[2];
 }	t_raycast;
 
 typedef struct s_point

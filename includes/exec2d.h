@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 19:08:22 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/02/13 10:39:56 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/02/13 11:27:14 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_point
 {
 	int	x;
 	int	y;
+	int	color;
 }	t_point;
 
 typedef struct s_bres

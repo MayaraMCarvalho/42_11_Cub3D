@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 19:03:32 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/01/31 18:27:55 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/02/13 11:31:36 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,13 @@ static void	bres_define(t_bres *b, t_point *init, t_point *dest)
 	b->y = init->y;
 	b->sign_x = 1;
 	b->sign_y = 1;
+	b->color = 0xFA8218;
 	if (init->x > dest->x)
 		b->sign_x = -1;
 	if (init->y > dest->y)
 		b->sign_y = -1;
+	if (dest->color)
+		b->color = dest->color;
 }
 
 void	bresenham(t_img *img, t_point init, t_point dest)
@@ -45,7 +48,6 @@ void	bresenham(t_img *img, t_point init, t_point dest)
 	bres_define(&bres, &init, &dest);
 	while (bres.x != dest.x || bres.y != dest.y)
 	{
-		bres.color = 0xFA8218;
 		put_pixel_img(img, bres.x, bres.y, bres.color);
 		p = bres.p;
 		if (p * 2 > -bres.dy)

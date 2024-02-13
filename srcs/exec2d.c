@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 18:42:33 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/02/13 11:19:38 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/02/13 11:33:57 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	draw_player(t_player player, t_img *img)
 	init.y = player.y;
 	dest.x = player.x + 5;
 	dest.y = player.y;
+	dest.color = 0;
 	while (dest.y < player.y + 5)
 	{
 		bresenham(img, init, dest);
@@ -325,10 +326,12 @@ void	draw_raycast(t_data2d *data)
 		{		
 			dest.x = ray.ver[0] + 2;
 			dest.y = ray.ver[1] + 2;
+			dest.color = 0xe83c25;
 		}
 		else{
 			dest.x = ray.hor[0] + 2;
 			dest.y = ray.hor[1] + 2;
+			dest.color = 0xe85e25;
 		}
 		bresenham(data->img, init, dest);
 	}

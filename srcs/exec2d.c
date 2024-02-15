@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 18:42:33 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/02/13 11:33:57 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/02/15 12:18:22 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,19 +50,34 @@ void	draw_player(t_player player, t_img *img)
 	bresenham(img, init, dest);
 }
 
-void	init_player(t_data *game,int x, int y, t_img *img)
+void	init_player(t_data *game)
 {
-	if (game->info.data.map[y][x] == 'N')
+	int		x;
+	int		y;
+	char	c;
+
+	y = -1;
+	while (++y < game->info.data.map_height)
+	{
+		x = -1;
+		while (++x < game->info.data.map_width)
+		{
+			if(ft_isalpha(game->info.data.map[y][x]))
+			{
+				c = game->info.data.map[y][x];
+				game->player.x = (x + 0.5) * SIZE;
+				game->player.y = (y + 0.5) * SIZE;
+			}
+		}
+	}
+	if (c == 'N')
 		game->player.ang = M_PI / 2;
-	else if (game->info.data.map[y][x] == 'S')
+	else if (c == 'S')
 		game->player.ang = 3 * M_PI / 2;
-	else if (game->info.data.map[y][x] == 'W')
+	else if (c == 'W')
 		game->player.ang = 0.0001;
-	else if (game->info.data.map[y][x] == 'E')
+	else if (c == 'E')
 		game->player.ang = 0.00001;
-	game->player.x = (x + 0.5) * SIZE;
-	game->player.y = (y + 0.5) * SIZE;
-	draw_player(game->player, img);
 }
 
 void	draw_map(t_data *game, t_img *img)
@@ -101,7 +116,7 @@ void	run_2d_game(t_data *game)
 	data.img->img = mlx_new_image(data.mlx, MAP2D, MAP2D);
 	data.img->addr = mlx_get_data_addr(data.img->img, &(data.img->bpp),
 			&(data.img->line_len), &(data.img->endian));
-	init_player(game, 7, 12, data.img);
+	init_player(data.game);
 	draw(&data);
 	
 	mlx_hook(data.window, 17, 0L, &exit_button, data.window);

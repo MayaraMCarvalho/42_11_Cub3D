@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 19:08:22 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/02/13 11:27:14 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/02/15 14:29:36 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,7 @@ void	bresenham(t_img *img, t_point init, t_point dest);
 int		key_press(int key, t_data2d *data);
 void	draw(t_data2d *data);
 void	draw_raycast(t_data2d *game);
+
+void	raising_the_walls(t_raycast *ray, t_player *p, t_img *img);
 
 #endif //EXEC2D_H

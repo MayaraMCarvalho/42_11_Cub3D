@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 18:42:33 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/02/15 12:18:22 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/02/18 16:06:01 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,16 +191,17 @@ int	key_press(int key, t_data2d *data)
 
 /***************************************************/
 // Raycast
-#define FOV			60
+#define FOV			66
 #define HALF_FOV	FOV/2
 #define MAX_RAYS	460
 #define MAX_DELPH	560
+#define WALL_HEIGHT	700
 
 int dist(int x1,int y1, int x2,int y2)
 {
 	return (sqrt((x2-x1)*(x2-x1) + (y2-y1)*(y2-y1)));
 }
-
+// 1 1 1 1 0 0 0 0
 void	h_rays(t_raycast *ray, t_player *p, t_sat map)
 {
 	ray->aTan = 1 / tan(ray->ang);
@@ -349,5 +350,32 @@ void	draw_raycast(t_data2d *data)
 			dest.color = 0xe85e25;
 		}
 		bresenham(data->img, init, dest);
+		// raising_the_walls(&ray, &(data->game)->player, &(data->game)->img);
+		// raising_the_walls(&ray, &(data->game)->player, data->img);
 	}
 }
+
+// void	raising_the_walls(t_raycast *ray, t_player *p, t_img *img)
+// {
+// 	t_point	init;
+// 	t_point	dest;
+// 	float	disH = ray->hor[2] * cos(p->ang - ray->ang);
+// 	int		hor_size = WIN_W / MAX_RAYS;
+// 	int		ver_line = (WIN_H * WIN_W / WALL_HEIGHT) / disH;
+// 	int		lineH = (SIZE * WIN_W) / (disH);
+// 	int		lineOff = WIN_H - (lineH>>1);
+	
+// 	init.x = ray->rays * hor_size;
+// 	dest.x = ray->rays * hor_size + hor_size;
+// 	dest.x--;
+// 	for (int i = 0; i < ver_line; i++)
+// 	{
+// 		init.y = i + lineOff;
+// 		dest.y = i + lineOff;
+// 		if(ray->ver[2] < ray->hor[2])
+// 			dest.color = 0xe83c25;
+// 		else
+// 			dest.color = 0xe85e25;
+// 		bresenham(img, init, dest);
+// 	}
+// }

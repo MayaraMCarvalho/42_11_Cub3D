@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
+/*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 22:19:50 by macarval          #+#    #+#             */
-/*   Updated: 2024/02/15 12:19:21 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/02/20 15:26:29 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,13 @@ int		validate_errors(t_data *game, int j, int i);
 void	init_window(t_data *game);
 void	exec_window(t_data *game);
 int		close_window(t_data *data);
+
+/* walls.c */
+int		get_texture(t_data *game, int x, int y);
+int		convert_color(t_color color);
+void	get_walls(t_data *game);
+void	draw_walls(t_img *img, int tam, int x, int color);
+void	background_3d(t_img *img, int color, char local);
 
 // /* Images */
 // void	create_img(t_data *data);

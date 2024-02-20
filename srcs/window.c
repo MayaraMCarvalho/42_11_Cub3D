@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   window.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
+/*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 15:17:55 by macarval          #+#    #+#             */
-/*   Updated: 2024/01/25 21:09:40 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/02/20 14:43:50 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,9 @@ void	init_window(t_data *game)
 void	exec_window(t_data *game)
 {
 	printf("\nCub3D running!!!\n\n");
+	background_3d(&game->img, convert_color(game->info.ceiling), 'C');
+	background_3d(&game->img, convert_color(game->info.floor), 'F');
+	get_walls(game);
 	mlx_put_image_to_window(game->mlx, game->win, game->img.img, 0, 0);
 	mlx_key_hook(game->win, &handle_keypress, game);
 	mlx_hook(game->win, DestroyNotify, NoEventMask, &close_window, game);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
+/*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 09:17:12 by macarval          #+#    #+#             */
-/*   Updated: 2024/01/19 18:29:19 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/02/19 15:14:21 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,9 @@ void	terminate(t_data *game)
 	if (errno == -1)
 		perror("error");
 	else
+	{
+		printf("erro: %i\n", errno);//
 		ft_putendl_fd("error", 2);
+	}
 	exit(1);
 }

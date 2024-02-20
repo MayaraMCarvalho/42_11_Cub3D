@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
+/*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 22:15:03 by macarval          #+#    #+#             */
-/*   Updated: 2024/01/25 19:35:25 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/02/20 15:15:26 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	main(int argc, char *argv[])
 	else
 	{
 		validations(argv, &game);
-		run_2d_game(&game);
+		// run_2d_game(&game);
 		exec_window(&game);
 	}
 	return (0);

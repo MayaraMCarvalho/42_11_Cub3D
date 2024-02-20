@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec2d.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
+/*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 18:42:33 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/02/18 16:06:01 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/02/20 15:12:36 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 #define MAP2D	680
 #define SIZE	32
-#define SPEED	5	
+#define SPEED	5
 
 void	draw_wall(int x, int y, t_img *img)
 {
@@ -31,7 +31,7 @@ void	draw_player(t_player player, t_img *img)
 {
 	t_point	init;
 	t_point	dest;
-	
+
 	init.x = player.x;
 	init.y = player.y;
 	dest.x = player.x + 5;
@@ -109,7 +109,7 @@ int	exit_button(t_data2d *e)
 void	run_2d_game(t_data *game)
 {
 	t_data2d	data;
-	
+
 	data.game = game;
 	data.mlx = mlx_init();
 	data.window = mlx_new_window(data.mlx, MAP2D, MAP2D, "cub2D");
@@ -118,7 +118,7 @@ void	run_2d_game(t_data *game)
 			&(data.img->line_len), &(data.img->endian));
 	init_player(data.game);
 	draw(&data);
-	
+
 	mlx_hook(data.window, 17, 0L, &exit_button, data.window);
 	mlx_hook(data.window, 02, 1L << 0, key_press, &data);
 
@@ -179,12 +179,12 @@ int	key_press(int key, t_data2d *data)
 		game->player.ang += 0.1;
 	if (key == RIGHT_KEY)
 		game->player.ang -= 0.1;
-	
+
 	if (game->player.ang < 0)
 		game->player.ang += 2 * M_PI;
 	if (game->player.ang > (2 * M_PI -0.00001))
 		game->player.ang -= 2 * M_PI;
-	
+
 	draw(data);
 	return (0);
 }
@@ -193,7 +193,7 @@ int	key_press(int key, t_data2d *data)
 // Raycast
 #define FOV			66
 #define HALF_FOV	FOV/2
-#define MAX_RAYS	460
+#define MAX_RAYS	1200
 #define MAX_DELPH	560
 #define WALL_HEIGHT	700
 
@@ -212,7 +212,7 @@ void	h_rays(t_raycast *ray, t_player *p, t_sat map)
 		ray->offset[0] = -ray->offset[1] * ray->aTan;
 	}
 	else if (ray->ang > M_PI)
-	{ 
+	{
 		ray->hor[1] = (((int)p->y>>5)<<5)+SIZE;
 		ray->hor[0] = (p->y - ray->hor[1]) * ray->aTan + p->x;
 		ray->offset[1]= SIZE;
@@ -224,7 +224,7 @@ void	h_rays(t_raycast *ray, t_player *p, t_sat map)
 		ray->hor[1] = p->y;
 		ray->dof = ray->max_dof;
 	}
-	
+
 	while (ray->dof < ray->max_dof)
 	{
 		ray->map[0] = (int)(ray->hor[0])>>5;
@@ -234,8 +234,8 @@ void	h_rays(t_raycast *ray, t_player *p, t_sat map)
 			&& ray->map[1] < map.data.map_height	\
 			&& map.data.map[ray->map[1]][ray->map[0]] == '1')
 		{
-			// ray->hor[2] = cos(ray->ang) * (ray->hor[0] - p->x) - sin(ray->ang) * (ray->hor[1] - p->y); 
-			ray->hor[2] = dist(p->x, p->y, ray->hor[0], ray->hor[1]); 
+			// ray->hor[2] = cos(ray->ang) * (ray->hor[0] - p->x) - sin(ray->ang) * (ray->hor[1] - p->y);
+			ray->hor[2] = dist(p->x, p->y, ray->hor[0], ray->hor[1]);
 			ray->dof = ray->max_dof;
 		}
 		else
@@ -258,7 +258,7 @@ void	v_rays(t_raycast *ray, t_player *p, t_sat map)
 		ray->offset[1] = -ray->offset[0] * ray->aTan;
 	}
 	else if (ray->ang > M_PI / 2 && ray->ang < 3 * M_PI / 2)
-	{ 
+	{
 		ray->ver[0] = (((int)p->x>>5)<<5) + -0.0001;
 		ray->ver[1] = (p->x - ray->ver[0]) * ray->aTan + p->y;
 		ray->offset[0] = -SIZE;
@@ -324,8 +324,10 @@ void	reset_params(t_raycast *ray, t_data2d *data)
 void	draw_raycast(t_data2d *data)
 {
 	t_raycast ray;
-	
+
 	init_raycast(&ray, data);
+	int ang = 0;//
+	int control = 0;//
 	while (ray.rays < MAX_RAYS)
 	{
 		reset_params(&ray, data);
@@ -333,23 +335,41 @@ void	draw_raycast(t_data2d *data)
 		v_rays(&ray, &(data->game)->player, data->game->info);
 		ray.ang -= 0.017453 / (MAX_RAYS / FOV);
 		ray.rays++;
-		
+
 		t_point	init;
 		t_point	dest;
 		init.x = data->game->player.x + 2;
 		init.y = data->game->player.y + 2;
-		if(ray.ver[2] < ray.hor[2])
-		{		
+		if (ray.ver[2] < ray.hor[2])
+		{
 			dest.x = ray.ver[0] + 2;
 			dest.y = ray.ver[1] + 2;
 			dest.color = 0xe83c25;
 		}
-		else{
+		else {
 			dest.x = ray.hor[0] + 2;
 			dest.y = ray.hor[1] + 2;
 			dest.color = 0xe85e25;
 		}
 		bresenham(data->img, init, dest);
+		//
+		float h;
+		h = ray.ver[2];
+		if (h > ray.hor[2])
+			h = ray.hor[2];
+		fprintf(fopen("dados.txt", "a+"),"%f\n", cos(ray.ang) * h);//
+		printf("ray: %f\n", ray.ang);//
+
+		if ((int)ray.ang != ang && ray.ang > 0)
+		{
+			control++;
+			if (control > 4)
+				control = 1;
+		}
+		fprintf(fopen("color.txt", "a+"),"%d\n", control);//
+		ang = ray.ang;
+		//
+
 		// raising_the_walls(&ray, &(data->game)->player, &(data->game)->img);
 		// raising_the_walls(&ray, &(data->game)->player, data->img);
 	}
@@ -364,7 +384,7 @@ void	draw_raycast(t_data2d *data)
 // 	int		ver_line = (WIN_H * WIN_W / WALL_HEIGHT) / disH;
 // 	int		lineH = (SIZE * WIN_W) / (disH);
 // 	int		lineOff = WIN_H - (lineH>>1);
-	
+
 // 	init.x = ray->rays * hor_size;
 // 	dest.x = ray->rays * hor_size + hor_size;
 // 	dest.x--;

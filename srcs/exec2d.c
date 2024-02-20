@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 18:42:33 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/02/20 15:12:36 by macarval         ###   ########.fr       */
+/*   Updated: 2024/02/20 15:50:41 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -360,14 +360,14 @@ void	draw_raycast(t_data2d *data)
 		fprintf(fopen("dados.txt", "a+"),"%f\n", cos(ray.ang) * h);//
 		printf("ray: %f\n", ray.ang);//
 
-		if ((int)ray.ang != ang && ray.ang > 0)
-		{
-			control++;
-			if (control > 4)
-				control = 1;
-		}
-		fprintf(fopen("color.txt", "a+"),"%d\n", control);//
-		ang = ray.ang;
+		// if ((int)ray.ang != ang && ray.ang > 0)
+		// {
+		// 	control++;
+		// 	if (control > 4)
+		// 		control = 1;
+		// }
+		// fprintf(fopen("color.txt", "a+"),"%d\n", control);//
+		// ang = ray.ang;
 		//
 
 		// raising_the_walls(&ray, &(data->game)->player, &(data->game)->img);

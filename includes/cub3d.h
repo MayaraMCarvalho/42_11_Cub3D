@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 22:19:50 by macarval          #+#    #+#             */
-/*   Updated: 2024/02/15 12:19:21 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/02/21 18:15:22 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@
 // # define SCROLL_DOWN 5
 typedef struct s_player
 {
+	int		map[2];
 	float	x;
 	float	y;
 	float	ang;

@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 18:42:33 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/02/18 16:06:01 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/02/21 18:52:47 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ void	init_player(t_data *game)
 				c = game->info.data.map[y][x];
 				game->player.x = (x + 0.5) * SIZE;
 				game->player.y = (y + 0.5) * SIZE;
+				game->player.map[0] = x;
+				game->player.map[1] = y;
 			}
 		}
 	}
@@ -75,9 +77,9 @@ void	init_player(t_data *game)
 	else if (c == 'S')
 		game->player.ang = 3 * M_PI / 2;
 	else if (c == 'W')
-		game->player.ang = 0.0001;
+		game->player.ang = M_PI;
 	else if (c == 'E')
-		game->player.ang = 0.00001;
+		game->player.ang = 0;
 }
 
 void	draw_map(t_data *game, t_img *img)
@@ -153,38 +155,51 @@ void	draw(t_data2d *data)
 }
 
 /***************************************************/
-//Movimento
 
 int	key_press(int key, t_data2d *data)
 {
-	t_data *game = data->game;
-
+	float		next_x = data->game->player.x;
+	float		next_y = data->game->player.y;
+	t_player	*player = &(data->game)->player;
+	
 	if (key == ESC_KEY)
 		exit_button(data);
 	if (key == W_KEY)
 	{
-		game->player.y += -sin(game->player.ang) * SPEED;
-		game->player.x += cos(game->player.ang) * SPEED;
+		next_x = player->x + (cos(player->ang) * SPEED);
+		next_y = player->y + (-sin(player->ang) * SPEED);
 	}
 	if (key == S_KEY)
 	{
-		game->player.y -= -sin(game->player.ang) * SPEED;
-		game->player.x -= cos(game->player.ang) * SPEED;
+		next_x = player->x - (cos(player->ang) * SPEED);
+		next_y = player->y - -sin(player->ang) * SPEED;
 	}
 	if (key == A_KEY)
-		game->player.x -= SPEED;
+		next_x = player->x - SPEED;
 	if (key == D_KEY)
-		game->player.x += SPEED;
+		next_x = player->x + SPEED;
+	
+	if(data->game->info.data.map[player->map[1]][(int)(next_x)>>5] != '1')
+	{
+		player->x = next_x;
+		player->map[0] = (int)(next_x)>>5;
+	}
+	if (data->game->info.data.map[(int)(next_y)>>5][player->map[0]] != '1')
+	{
+		player->y = next_y;
+		player->map[1] = (int)(next_y)>>5;
+	}
+
 	if (key == LEFT_KEY)
-		game->player.ang += 0.1;
+		player->ang += 0.1;
 	if (key == RIGHT_KEY)
-		game->player.ang -= 0.1;
+		player->ang -= 0.1;
+	if (player->ang < 0)
+		player->ang += 2 * M_PI;
+	if (player->ang > (2 * M_PI -0.00001))
+		player->ang -= 2 * M_PI;
 	
-	if (game->player.ang < 0)
-		game->player.ang += 2 * M_PI;
-	if (game->player.ang > (2 * M_PI -0.00001))
-		game->player.ang -= 2 * M_PI;
-	
+
 	draw(data);
 	return (0);
 }
@@ -201,7 +216,7 @@ int dist(int x1,int y1, int x2,int y2)
 {
 	return (sqrt((x2-x1)*(x2-x1) + (y2-y1)*(y2-y1)));
 }
-// 1 1 1 1 0 0 0 0
+
 void	h_rays(t_raycast *ray, t_player *p, t_sat map)
 {
 	ray->aTan = 1 / tan(ray->ang);
@@ -234,7 +249,6 @@ void	h_rays(t_raycast *ray, t_player *p, t_sat map)
 			&& ray->map[1] < map.data.map_height	\
 			&& map.data.map[ray->map[1]][ray->map[0]] == '1')
 		{
-			// ray->hor[2] = cos(ray->ang) * (ray->hor[0] - p->x) - sin(ray->ang) * (ray->hor[1] - p->y); 
 			ray->hor[2] = dist(p->x, p->y, ray->hor[0], ray->hor[1]); 
 			ray->dof = ray->max_dof;
 		}
@@ -279,7 +293,6 @@ void	v_rays(t_raycast *ray, t_player *p, t_sat map)
 			&& ray->map[1] < map.data.map_height	\
 			&& map.data.map[ray->map[1]][ray->map[0]] == '1')
 		{
-			// ray->ver[2] = cos(ray->ang) * (ray->ver[0] - p->x) - sin(ray->ang) * (ray->ver[1] - p->y);
 			ray->ver[2] = dist(p->x, p->y, ray->ver[0], ray->ver[1]);
 			ray->dof = ray->max_dof;
 		}

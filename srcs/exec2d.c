@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 18:42:33 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/02/21 18:52:47 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/02/21 19:06:20 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,39 +156,39 @@ void	draw(t_data2d *data)
 
 /***************************************************/
 
-int	key_press(int key, t_data2d *data)
+void	player_move(t_data2d *data, float next_x, float next_y)
 {
-	float		next_x = data->game->player.x;
-	float		next_y = data->game->player.y;
 	t_player	*player = &(data->game)->player;
-	
-	if (key == ESC_KEY)
-		exit_button(data);
-	if (key == W_KEY)
-	{
-		next_x = player->x + (cos(player->ang) * SPEED);
-		next_y = player->y + (-sin(player->ang) * SPEED);
-	}
-	if (key == S_KEY)
-	{
-		next_x = player->x - (cos(player->ang) * SPEED);
-		next_y = player->y - -sin(player->ang) * SPEED;
-	}
-	if (key == A_KEY)
-		next_x = player->x - SPEED;
-	if (key == D_KEY)
-		next_x = player->x + SPEED;
-	
-	if(data->game->info.data.map[player->map[1]][(int)(next_x)>>5] != '1')
+	char		**map = data->game->info.data.map;
+
+	if(map[player->map[1]][(int)(next_x)>>5] != '1')
 	{
 		player->x = next_x;
 		player->map[0] = (int)(next_x)>>5;
 	}
-	if (data->game->info.data.map[(int)(next_y)>>5][player->map[0]] != '1')
+	if (map[(int)(next_y)>>5][player->map[0]] != '1')
 	{
 		player->y = next_y;
 		player->map[1] = (int)(next_y)>>5;
 	}
+}
+
+int	key_press(int key, t_data2d *data)
+{
+	t_player	*player = &(data->game)->player;
+	float		cos_a = cos(player->ang) * SPEED;
+	float		sin_a = -sin(player->ang) * SPEED;
+	
+	if (key == ESC_KEY)
+		exit_button(data);
+	if (key == W_KEY)
+		player_move(data, player->x + cos_a, player->y + sin_a);
+	if (key == S_KEY)
+		player_move(data, player->x - cos_a, player->y - sin_a);
+	if (key == A_KEY)
+		player_move(data, player->x - SPEED, player->y);
+	if (key == D_KEY)
+		player_move(data, player->x + SPEED, player->y);
 
 	if (key == LEFT_KEY)
 		player->ang += 0.1;
@@ -199,7 +199,6 @@ int	key_press(int key, t_data2d *data)
 	if (player->ang > (2 * M_PI -0.00001))
 		player->ang -= 2 * M_PI;
 	
-
 	draw(data);
 	return (0);
 }

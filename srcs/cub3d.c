@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 22:15:03 by macarval          #+#    #+#             */
-/*   Updated: 2024/01/25 19:35:25 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/02/25 17:10:32 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ int	main(int argc, char *argv[])
 	else
 	{
 		validations(argv, &game);
-		run_2d_game(&game);
+		init_player(&game);
+		draw(&game);
 		exec_window(&game);
 	}
 	return (0);
@@ -46,7 +47,7 @@ void	inicialize(t_data *game)
 	game->info.ceiling.r = -1;
 	game->info.ceiling.g = -1;
 	game->info.ceiling.b = -1;
-	game->info.data.map = NULL;
+	game->map.map = NULL;
 	game->exit_code = 0;
 	init_window(game);
 }

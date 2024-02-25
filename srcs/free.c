@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 15:58:38 by macarval          #+#    #+#             */
-/*   Updated: 2024/01/18 19:42:29 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/02/25 15:51:46 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ void	free_game(t_data *game)
 		free(game->info.west);
 	if (game->info.east)
 		free(game->info.east);
-	if (game->info.data.map)
-		free_map(game);
 	if (game->mlx)
 		free(game->mlx);
 }
@@ -47,9 +45,9 @@ void	free_map(t_data *game)
 	int	i;
 
 	i = -1;
-	while (++i < game->info.data.map_height)
-		free(game->info.data.map[i]);
-	free(game->info.data.map);
+	while (++i < game->map.map_height)
+		free(game->map.map[i]);
+	free(game->map.map);
 }
 
 void	exit_err(char *line, t_data *game, int exit_code, char *err)

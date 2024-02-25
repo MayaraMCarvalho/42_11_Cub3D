@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 09:00:14 by macarval          #+#    #+#             */
-/*   Updated: 2024/01/16 17:04:03 by macarval         ###   ########.fr       */
+/*   Updated: 2024/02/25 15:52:07 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,10 @@ void	validate_map(t_data *game)
 
 	j = -1;
 	error = 0;
-	while (++j < game->info.data.map_height && game->info.data.map[j])
+	while (++j < game->map.map_height && game->map.map[j])
 	{
 		i = -1;
-		while (++i < game->info.data.map_width && game->info.data.map[j][i])
+		while (++i < game->map.map_width && game->map.map[j][i])
 		{
 			error += validate_errors(game, j, i);
 			if (error > 1)
@@ -77,14 +77,14 @@ int	validate_errors(t_data *game, int j, int i)
 	int		error;
 
 	error = 0;
-	if (((j == 0 || !game->info.data.map[j + 1])
-			&& !ft_strchr("1\t\n ", game->info.data.map[j][i]))
-		|| (game->info.data.map[j][i] == '0'
+	if (((j == 0 || !game->map.map[j + 1])
+			&& !ft_strchr("1\t\n ", game->map.map[j][i]))
+		|| (game->map.map[j][i] == '0'
 		&& !check_neighbors(game, j, i, "01NSEW")))
 		exit_err(NULL, game, 16, ERR_MAP_OPEN);
-	if (!ft_strchr("01NSEW\t\n ", game->info.data.map[j][i]))
+	if (!ft_strchr("01NSEW\t\n ", game->map.map[j][i]))
 		exit_err(NULL, game, 17, ERR_MAP_DISALLOW);
-	if (ft_strchr("NSEW", game->info.data.map[j][i]))
+	if (ft_strchr("NSEW", game->map.map[j][i]))
 	{
 		error = 1;
 		if (!check_neighbors(game, j, i, "01"))

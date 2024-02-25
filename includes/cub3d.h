@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 22:19:50 by macarval          #+#    #+#             */
-/*   Updated: 2024/02/21 18:15:22 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/02/25 17:23:24 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,11 @@
 /* Window */
 # define WIN_W 1200
 # define WIN_H 800
+
+/* Raycast */
+#define FOV			66
+#define MAX_RAYS	460
+
 
 /* Events */
 // # define LEFT_CLICK 1
@@ -72,7 +77,7 @@ typedef struct s_map
 	char	**map;
 }	t_map;
 
-typedef struct s_set
+typedef struct s_info
 {
 	char		*north;
 	char		*south;
@@ -80,8 +85,7 @@ typedef struct s_set
 	char		*east;
 	t_color		floor;
 	t_color		ceiling;
-	t_map		data;
-}	t_set;
+}	t_info;
 
 typedef struct s_data
 {
@@ -89,11 +93,12 @@ typedef struct s_data
 	void		*win;
 	int			fd;
 	char		*file_name;
-	t_img		img;
-	t_set		info;
 	int			exit_code;
 	char		*exit_str;
+	t_img		img;
+	t_info		info;
 	t_player	player;
+	t_map		map;
 }	t_data;
 
 void	inicialize(t_data *game);
@@ -138,6 +143,9 @@ int		validate_errors(t_data *game, int j, int i);
 void	init_window(t_data *game);
 void	exec_window(t_data *game);
 int		close_window(t_data *data);
+
+/* player.c */
+void	init_player(t_data *game);
 
 // /* Images */
 // void	create_img(t_data *data);

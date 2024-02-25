@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 09:03:43 by macarval          #+#    #+#             */
-/*   Updated: 2024/01/25 19:04:13 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/02/25 15:48:44 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,16 @@ void	process_map(t_data *game, int final_set)
 	int		width;
 
 	line = get_map_init(game, final_set);
-	game->info.data.map_height = 0;
-	game->info.data.map_width = ft_strlen(line) - 1;
+	game->map.map_height = 0;
+	game->map.map_width = ft_strlen(line) - 1;
 	while (line)
 	{
 		if (!strcmp_mod(line, "\n"))
 			exit_err(line, game, 13, ERR_MAP_OPEN);
 		width = ft_strlen(line) - 1;
-		if (width > game->info.data.map_width)
-			game->info.data.map_width = width;
-		game->info.data.map_height++;
+		if (width > game->map.map_width)
+			game->map.map_width = width;
+		game->map.map_height++;
 		free(line);
 		line = get_next_line(game->fd);
 	}
@@ -41,10 +41,10 @@ char	*get_map_init(t_data *game, int final_set)
 	char	*line;
 
 	line = get_next_line(game->fd);
-	game->info.data.map_init = 1;
+	game->map.map_init = 1;
 	while (line && !strcmp_mod(line, "\n"))
 	{
-		game->info.data.map_init++;
+		game->map.map_init++;
 		free(line);
 		line = get_next_line(game->fd);
 	}
@@ -52,7 +52,7 @@ char	*get_map_init(t_data *game, int final_set)
 		exit_err(line, game, 14, ERR_COLOR);
 	if (line[0] == 'N' || line[0] == 'S' || line[0] == 'W' || line[0] == 'E')
 		exit_err(line, game, 15, ERR_TEX);
-	game->info.data.map_init += final_set;
+	game->map.map_init += final_set;
 	return (line);
 }
 
@@ -66,7 +66,7 @@ void	get_map(t_data *game)
 	alloc_map(game);
 	game->fd = open(game->file_name, O_RDONLY);
 	line = get_next_line(game->fd);
-	while (line && ++i < game->info.data.map_init)
+	while (line && ++i < game->map.map_init)
 	{
 		free(line);
 		line = get_next_line(game->fd);
@@ -76,7 +76,7 @@ void	get_map(t_data *game)
 	{
 		i = -1;
 		while (line[++i] && line[i] != '\n')
-			game->info.data.map[j][i] = line[i];
+			game->map.map[j][i] = line[i];
 		j++;
 		free(line);
 		line = get_next_line(game->fd);
@@ -87,13 +87,13 @@ void	alloc_map(t_data *game)
 {
 	int	i;
 
-	game->info.data.map = (char **) ft_calloc
-		(game->info.data.map_height + 1, sizeof(char *));
+	game->map.map = (char **) ft_calloc
+		(game->map.map_height + 1, sizeof(char *));
 	i = -1;
-	while (++i < game->info.data.map_height)
+	while (++i < game->map.map_height)
 	{
-		game->info.data.map[i] = (char *) ft_calloc
-			(game->info.data.map_width + 1, sizeof(char));
+		game->map.map[i] = (char *) ft_calloc
+			(game->map.map_width + 1, sizeof(char));
 	}
 }
 
@@ -101,9 +101,9 @@ int	check_neighbors(t_data *game, int j, int i, char *pattern)
 {
 	char	**map;
 
-	map = game->info.data.map;
-	if (j - 1 < 0 || j + 1 >= game->info.data.map_height
-		|| i - 1 < 0 || i + 1 >= game->info.data.map_width
+	map = game->map.map;
+	if (j - 1 < 0 || j + 1 >= game->map.map_height
+		|| i - 1 < 0 || i + 1 >= game->map.map_width
 		|| !map[j][i + 1] || !map[j + 1][i])
 		return (0);
 	if (!ft_strchr("01NSEW\t\n ", map[j][i + 1])

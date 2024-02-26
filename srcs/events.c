@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 22:12:16 by macarval          #+#    #+#             */
-/*   Updated: 2024/02/26 18:34:17 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/02/26 19:05:56 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@
 void	player_move(t_data *game, float next_x, float next_y)
 {
 	t_player	*player = &(game)->player;
-	printf("passou [%d]\n", (int)(next_x)>>5);
 
 	if(game->map.map[player->map[1]][(int)(next_x)>>5] != '1')
 	{
@@ -81,17 +80,16 @@ void	player_move(t_data *game, float next_x, float next_y)
 		player->y = next_y;
 		player->map[1] = (int)(next_y)>>5;
 	}
-	printf("passou oh ye\n");
 }
 
 int	key_press(int key, t_data *game)
 {
 	
-	printf("x: %f\n", game->player.x);
-	printf("y: %f\n", game->player.y);
-	printf("y: %f\n", game->player.ang);
-	printf("map_x: %d\n", game->player.map[0]);
-	printf("map_x: %d\n", game->player.map[1]);
+	// printf("x: %f\n", game->player.x);
+	// printf("y: %f\n", game->player.y);
+	// printf("y: %f\n", game->player.ang);
+	// printf("map_x: %d\n", game->player.map[0]);
+	// printf("map_x: %d\n", game->player.map[1]);
 	
 	t_player	*player = &(game)->player;
 	float		cos_a = cos(player->ang) * SPEED;
@@ -117,7 +115,6 @@ int	key_press(int key, t_data *game)
 	if (player->ang > (2 * M_PI -0.00001))
 		player->ang -= 2 * M_PI;
 
-	
-	// draw(game);
+	draw(game);
 	return (0);
 }

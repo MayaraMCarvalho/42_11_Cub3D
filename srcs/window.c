@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 15:17:55 by macarval          #+#    #+#             */
-/*   Updated: 2024/02/25 17:02:34 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/02/26 18:38:22 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ void	init_window(t_data *game)
 void	exec_window(t_data *game)
 {
 	printf("\nCub3D running!!!\n\n");
-	mlx_key_hook(game->win, &handle_keypress, game);
-	mlx_hook(game->win, DestroyNotify, NoEventMask, &close_window, game);
-	// mlx_mouse_hook(game->win, &handle_mouse, game);
+	
+	mlx_hook(game->win, 02, 1L << 0, key_press, game);
+	mlx_hook(game->win, 17, 0L, &close_window, game);
 	mlx_loop(game->mlx);
 }
 

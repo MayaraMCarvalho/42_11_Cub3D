@@ -6,12 +6,12 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 18:42:33 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/02/25 15:54:33 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/02/25 18:05:58 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec2d.h"
-
+/*
 #define MAP2D	680
 #define SIZE	32
 #define SPEED	5	
@@ -128,7 +128,7 @@ void	run_2d_game(t_data *game)
 	mlx_destroy_image(data.mlx, data.img->img);
 	free(data.mlx);
 }
-/***************************************************/
+
 //Draw
 
 void	draw_background(t_img *img)
@@ -154,7 +154,7 @@ void	draw(t_data2d *data)
 	mlx_put_image_to_window(data->mlx, data->window, data->img->img, 0, 0);
 }
 
-/***************************************************/
+
 
 void	player_move(t_data2d *data, float next_x, float next_y)
 {
@@ -203,7 +203,7 @@ int	key_press(int key, t_data2d *data)
 	return (0);
 }
 
-/***************************************************/
+
 // Raycast
 #define FOV			66
 #define HALF_FOV	FOV/2
@@ -374,7 +374,7 @@ void	draw_raycast(t_data2d *data)
 // 	float	disH = ray->hor[2] * cos(p->ang - ray->ang);
 // 	int		hor_size = WIN_W / MAX_RAYS;
 // 	int		ver_line = (WIN_H * WIN_W / WALL_HEIGHT) / disH;
-// 	int		lineH = (SIZE * WIN_W) / (disH);
+	// int		lineH = (SIZE * WIN_W) / (disH);
 // 	int		lineOff = WIN_H - (lineH>>1);
 	
 // 	init.x = ray->rays * hor_size;
@@ -391,3 +391,5 @@ void	draw_raycast(t_data2d *data)
 // 		bresenham(img, init, dest);
 // 	}
 // }
+
+*/

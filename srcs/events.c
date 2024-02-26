@@ -3,24 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   events.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 22:12:16 by macarval          #+#    #+#             */
-/*   Updated: 2024/01/09 15:08:39 by macarval         ###   ########.fr       */
+/*   Updated: 2024/02/26 18:34:17 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	handle_keypress(int keysym, t_data	*game)
-{
-	if (keysym == XK_Escape)
-		close_window(game);
-	// move_frac(keysym, data, 0.1); // move pixel
-	return (0);
-}
 
-// int	handle_mouse(int button, int x, int y, t_data	*game)
+// int	handle_mouse(int button, int x, int y, t_game	*game)
 // {
 // 	if (button == LEFT_CLICK)
 // 		change_color(game);
@@ -35,16 +28,16 @@ int	handle_keypress(int keysym, t_data	*game)
 // 	{
 // 		mlx_destroy_image(game->mlx_ptr, game->img.mlx_img);
 // 		if (button == SCROLL_UP)
-// 			zoom_frac(0.5, data);
+// 			zoom_frac(0.5, game);
 // 		else
-// 			zoom_frac(2, data);
-// 		move_zoom(x, y, data);
+// 			zoom_frac(2, game);
+// 		move_zoom(x, y, game);
 // 		create_img(game);
 // 	}
 // 	return (0);
 // }
 
-// void	move_frac(int keysym, t_data *data, double dist)
+// void	move_frac(int keysym, t_game *game, double dist)
 // {
 // 	double	r_center;
 // 	double	i_center;
@@ -73,29 +66,58 @@ int	handle_keypress(int keysym, t_data	*game)
 // 	}
 // }
 
-// void	zoom_frac(double zoom, t_data	*game)
-// {
-// 	double	r_center;
-// 	double	i_center;
+void	player_move(t_data *game, float next_x, float next_y)
+{
+	t_player	*player = &(game)->player;
+	printf("passou [%d]\n", (int)(next_x)>>5);
 
-// 	r_center = game->frac.min_r - game->frac.max_r;
-// 	i_center = game->frac.max_i - game->frac.min_i;
-// 	game->frac.min_r = game->frac.max_r + zoom * r_center;
-// 	game->frac.max_r = game->frac.max_r + (r_center - zoom * r_center) / 2;
-// 	game->frac.max_i = game->frac.min_i + zoom * (i_center);
-// 	game->frac.min_i = game->frac.min_i + (i_center - zoom * i_center) / 2;
-// }
+	if(game->map.map[player->map[1]][(int)(next_x)>>5] != '1')
+	{
+		player->x = next_x;
+		player->map[0] = (int)(next_x)>>5;
+	}
+	if (game->map.map[(int)(next_y)>>5][player->map[0]] != '1')
+	{
+		player->y = next_y;
+		player->map[1] = (int)(next_y)>>5;
+	}
+	printf("passou oh ye\n");
+}
 
-// void	move_zoom(int x, int y, t_data	*game)
-// {
-// 	x -= WIN_W / 2;
-// 	y -= WIN_H / 2;
-// 	if (x < 0)
-// 		move_frac(XK_Right, data, 1 - (double)x / WIN_W);
-// 	else if (x > 0)
-// 		move_frac(XK_Left, data, (double)x / WIN_W + 0.1);
-// 	if (y < 0)
-// 		move_frac(XK_Down, data, -(double)y / WIN_H);
-// 	else if (y > 0)
-// 		move_frac(XK_Up, data, 1 + (double)y / WIN_H);
-// }
+int	key_press(int key, t_data *game)
+{
+	
+	printf("x: %f\n", game->player.x);
+	printf("y: %f\n", game->player.y);
+	printf("y: %f\n", game->player.ang);
+	printf("map_x: %d\n", game->player.map[0]);
+	printf("map_x: %d\n", game->player.map[1]);
+	
+	t_player	*player = &(game)->player;
+	float		cos_a = cos(player->ang) * SPEED;
+	float		sin_a = -sin(player->ang) * SPEED;
+	
+	if (key == ESC_KEY)
+		close_window(game);
+	if (key == W_KEY)
+		player_move(game, player->x + cos_a, player->y + sin_a);
+	if (key == S_KEY)
+		player_move(game, player->x - cos_a, player->y - sin_a);
+	if (key == A_KEY)
+		player_move(game, player->x - SPEED, player->y);
+	if (key == D_KEY)
+		player_move(game, player->x + SPEED, player->y);
+
+	if (key == LEFT_KEY)
+		player->ang += 0.1;
+	if (key == RIGHT_KEY)
+		player->ang -= 0.1;
+	if (player->ang < 0)
+		player->ang += 2 * M_PI;
+	if (player->ang > (2 * M_PI -0.00001))
+		player->ang -= 2 * M_PI;
+
+	
+	// draw(game);
+	return (0);
+}

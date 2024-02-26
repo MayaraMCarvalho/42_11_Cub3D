@@ -6,13 +6,13 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 17:20:14 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/02/25 17:22:24 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/02/26 18:39:04 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int dist(int x1,int y1, int x2,int y2)
+static int dist(int x1,int y1, int x2,int y2)
 {
 	return (sqrt((x2-x1)*(x2-x1) + (y2-y1)*(y2-y1)));
 }
@@ -59,7 +59,6 @@ void	h_rays(t_raycast *ray, t_player *p, t_map map)
 			ray->dof++;
 		}
 	}
-	ray->dof = 0;
 }
 
 void	v_rays(t_raycast *ray, t_player *p, t_map map)
@@ -103,26 +102,25 @@ void	v_rays(t_raycast *ray, t_player *p, t_map map)
 			ray->dof++;
 		}
 	}
-	ray->dof = 0;
 }
 
-void	init_raycast(t_raycast *ray, t_data2d *data)
+void	init_raycast(t_raycast *ray, t_data *game)
 {
-	ray->ang = data->game->player.ang + (M_PI / 6);
-	ray->rays = 0;
-	if (data->game->map.map_height > data->game->map.map_width)
-		ray->max_dof = data->game->map.map_height;
+	ray->rays = -1;
+	ray->ang = game->player.ang + (M_PI / 6);
+	if (game->map.map_height > game->map.map_width)
+		ray->max_dof = game->map.map_height;
 	else
-		ray->max_dof = data->game->map.map_width;
+		ray->max_dof = game->map.map_width;
 }
 
-static void	reset_params(t_raycast *ray, t_data2d *data)
+static void	reset_params(t_raycast *ray, t_data *game)
 {
-	ray->hor[0] = data->game->player.x;
-	ray->hor[1] = data->game->player.y;
+	ray->hor[0] = game->player.x;
+	ray->hor[1] = game->player.y;
 	ray->hor[2] = 1000000000;
-	ray->ver[0] = data->game->player.x;
-	ray->ver[1] = data->game->player.y;
+	ray->ver[0] = game->player.x;
+	ray->ver[1] = game->player.y;
 	ray->ver[2] = 1000000000;
 	ray->offset[0] = 0;
 	ray->offset[1] = 0;
@@ -134,33 +132,18 @@ static void	reset_params(t_raycast *ray, t_data2d *data)
 		ray->ang -= 2 * M_PI;
 }
 
-void	draw_raycast(t_data2d *data)
+void	raycast(t_data *game)
 {
 	t_raycast ray;
 	
-	init_raycast(&ray, data);
-	while (ray.rays < MAX_RAYS)
+	init_raycast(&ray, game);
+	while (++ray.rays < MAX_RAYS)
 	{
-		reset_params(&ray, data);
-		h_rays(&ray, &(data->game)->player, data->game->map);
-		v_rays(&ray, &(data->game)->player, data->game->map);
-		ray.ang -= 0.017453 / (MAX_RAYS / FOV);
-		ray.rays++;
 		
-		t_point	init;
-		t_point	dest;
-		init.x = data->game->player.x + 2;
-		init.y = data->game->player.y + 2;
-		if(ray.ver[2] < ray.hor[2])
-		{		
-			dest.x = ray.ver[0] + 2;
-			dest.y = ray.ver[1] + 2;
-			dest.color = 0xe83c25;
-		}
-		else{
-			dest.x = ray.hor[0] + 2;
-			dest.y = ray.hor[1] + 2;
-			dest.color = 0xe85e25;
-		}
+		reset_params(&ray, game);
+		h_rays(&ray, &(game)->player, game->map);
+		v_rays(&ray, &(game)->player, game->map);
+		ray.ang -= 0.017453 / (MAX_RAYS / FOV);
+		// get_walls(game, &ray);
 	}
 }

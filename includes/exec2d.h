@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 19:08:22 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/02/15 14:29:36 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/02/25 18:26:49 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,20 @@ typedef struct s_img	t_img;
 typedef struct s_player	t_player;
 typedef struct s_set	t_sat;
 
-typedef	struct s_raycast
-{
-	float	hor[3];
-	float	ver[3];
-	float	offset[2];
-	float	ang;
-	float	aTan;
-	int		rays;
-	int		dof;
-	int		max_dof;
-	int		map[2];
-}	t_raycast;
+typedef	struct s_raycast t_raycast;
+
+// typedef	struct s_raycast
+// {
+// 	float	hor[3];
+// 	float	ver[3];
+// 	float	offset[2];
+// 	float	ang;
+// 	float	aTan;
+// 	int		rays;
+// 	int		dof;
+// 	int		max_dof;
+// 	int		map[2];
+// }	t_raycast;
 
 typedef struct s_point
 {
@@ -60,14 +62,14 @@ typedef struct s_data2d
 	t_data	*game;
 }	t_data2d;
 
-void	run_2d_game(t_data *game);
+// void	run_2d_game(t_data *game);
 void	put_pixel_img(t_img *img, int x, int y, int color);
-void	bresenham(t_img *img, t_point init, t_point dest);
+// void	bresenham(t_img *img, t_point init, t_point dest);
 
-int		key_press(int key, t_data2d *data);
-void	draw(t_data2d *data);
-void	draw_raycast(t_data2d *game);
+// int		key_press(int key, t_data2d *data);
+// // void	draw(t_data2d *data);
+// void	draw_raycast(t_data2d *game);
 
-void	raising_the_walls(t_raycast *ray, t_player *p, t_img *img);
+// void	raising_the_walls(t_raycast *ray, t_player *p, t_img *img);
 
 #endif //EXEC2D_H

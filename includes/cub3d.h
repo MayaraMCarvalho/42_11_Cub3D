@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 22:19:50 by macarval          #+#    #+#             */
-/*   Updated: 2024/02/25 17:23:24 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/02/25 18:25:13 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,9 @@
 
 /* Raycast */
 #define FOV			66
-#define MAX_RAYS	460
+#define MAX_RAYS	WIN_W
+#define	SIZE		32
+#define	SPEED		5
 
 
 /* Events */
@@ -52,6 +54,19 @@ typedef struct s_player
 	float	y;
 	float	ang;
 }	t_player;
+
+typedef	struct s_raycast
+{
+	float	hor[3];
+	float	ver[3];
+	float	offset[2];
+	float	ang;
+	float	aTan;
+	int		rays;
+	int		dof;
+	int		max_dof;
+	int		map[2];
+}	t_raycast;
 
 typedef struct s_img
 {
@@ -105,6 +120,7 @@ void	inicialize(t_data *game);
 
 /* event.c */
 int		handle_keypress(int keysym, t_data	*data);
+int		key_press(int key, t_data *game);
 
 /* free.c */
 void	free_map(t_data *game);
@@ -146,6 +162,16 @@ int		close_window(t_data *data);
 
 /* player.c */
 void	init_player(t_data *game);
+
+/* draw.c */
+void	draw(t_data *game);
+void	draw_walls(t_img *img, int tam, int x, int color);
+
+/* raycast.c*/
+void	raycast(t_data *game);
+
+/* raycast_walls.c */
+void    get_walls(t_data *game, t_raycast *ray);
 
 // /* Images */
 // void	create_img(t_data *data);

@@ -27,6 +27,7 @@ INIT_PATH		= init/
 SRC_DIR			=	./srcs/
 SRC_LIST		=	cub3d.c events.c free.c maps.c process.c \
 					utils.c validation.c window.c exec2d.c utils2d.c\
+					raycast.c raycast_walls.c draw.c player.c
 
 SRCS			= $(addprefix $(SRC_DIR),$(SRC_LIST))
 

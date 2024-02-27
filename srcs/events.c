@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 10:03:34 by macarval          #+#    #+#             */
-/*   Updated: 2024/02/27 10:50:11 by macarval         ###   ########.fr       */
+/*   Updated: 2024/02/27 12:48:16 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,14 @@ int	key_press(int key, t_data *game)
 	return (0);
 }
 
+int	key_press_esc(int key, t_data *game)
+{
+	if (key == ESC_KEY)
+		close_window(game);
+	draw(game);
+	return (0);
+}
+
 void	verify_key(int key, t_data *game)
 {
 	t_player	*player;
@@ -45,8 +53,6 @@ void	verify_key(int key, t_data *game)
 	player = &(game)->player;
 	cos_a = cos(player->ang) * SPEED;
 	sin_a = -sin(player->ang) * SPEED;
-	if (key == ESC_KEY)
-		close_window(game);
 	if (key == W_KEY)
 		player_move(game, player->x + cos_a, player->y + sin_a);
 	if (key == S_KEY)

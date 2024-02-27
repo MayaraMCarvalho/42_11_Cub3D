@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 22:19:50 by macarval          #+#    #+#             */
-/*   Updated: 2024/02/27 09:57:13 by macarval         ###   ########.fr       */
+/*   Updated: 2024/02/27 13:10:40 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,7 @@ void	draw_walls(t_img *img, int tam, int x, int color);
 /* event.c */
 int		key_press(int key, t_data *game);
 void	verify_key(int key, t_data *game);
+int		key_press_esc(int key, t_data *game);
 int		handle_keypress(int keysym, t_data	*data);
 
 /* free.c */
@@ -131,6 +132,12 @@ void	free_map(t_data *game);
 void	free_game(t_data *game);
 void	free_split(char ***split);
 void	exit_err(char *line, t_data *game, int exit_code, char *err);
+
+/* h_raycast.c */
+void	set_h_rays(t_raycast *ray, t_player *p);
+void	set_v_rays(t_raycast *ray, t_player *p);
+void	h_rays(t_raycast *ray, t_player *p, t_map map);
+void	v_rays(t_raycast *ray, t_player *p, t_map map);
 
 /* maps.c */
 void	get_map(t_data *game);
@@ -141,6 +148,7 @@ int		check_neighbors(t_data *game, int j, int i, char *pattern);
 
 /* player.c */
 void	init_player(t_data *game);
+void	verify_player(t_player *player, char c);
 
 /* process.c */
 int		process_settings(t_data *game);
@@ -154,6 +162,7 @@ void	get_walls(t_data *game, t_raycast *ray);
 
 /* raycast.c*/
 void	raycast(t_data *game);
+int		dist(int x1, int y1, int x2, int y2);
 
 /* util.c */
 char	*strchr_rev(const char *str, int c);

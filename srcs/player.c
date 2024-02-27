@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 17:12:56 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/02/27 09:59:40 by macarval         ###   ########.fr       */
+/*   Updated: 2024/02/27 13:10:33 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	init_player(t_data *game)
 {
-	int		x;
-	int		y;
-	char	c;
+	int			x;
+	int			y;
+	char		c;
 	t_player	*player;
 
 	player = &(game)->player;
@@ -36,6 +36,11 @@ void	init_player(t_data *game)
 			}
 		}
 	}
+	verify_player(player, c);
+}
+
+void	verify_player(t_player *player, char c)
+{
 	if (c == 'N')
 		player->ang = M_PI / 2;
 	else if (c == 'S')

@@ -25,9 +25,10 @@ INIT_PATH		= init/
 
 #source codes
 SRC_DIR			=	./srcs/
-SRC_LIST		=	cub3d.c events.c free.c maps.c process.c \
-					utils.c validation.c window.c exec2d.c utils2d.c\
-					raycast.c raycast_walls.c draw.c player.c
+SRC_LIST		=	cub3d.c draw.c events.c exec2d.c free.c h_v_rays.c maps.c \
+					player.c process.c raycast_walls.c raycast.c utils.c utils2d.c \
+					validation.c window.c \
+
 
 SRCS			= $(addprefix $(SRC_DIR),$(SRC_LIST))
 

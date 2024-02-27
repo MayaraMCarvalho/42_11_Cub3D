@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   window.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
+/*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 15:17:55 by macarval          #+#    #+#             */
-/*   Updated: 2024/02/26 18:38:22 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/02/27 11:44:08 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void validation_window_alloc(t_data *game)
+static void	validation_window_alloc(t_data *game)
 {
 	if (game->mlx == NULL)
 		game->exit_code = 2;
@@ -39,7 +39,6 @@ void	init_window(t_data *game)
 void	exec_window(t_data *game)
 {
 	printf("\nCub3D running!!!\n\n");
-	
 	mlx_hook(game->win, 02, 1L << 0, key_press, game);
 	mlx_hook(game->win, 17, 0L, &close_window, game);
 	mlx_loop(game->mlx);

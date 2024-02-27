@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
+/*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 17:20:14 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/02/26 19:05:34 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/02/27 09:12:39 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,19 @@ static int dist(int x1,int y1, int x2,int y2)
 
 void	h_rays(t_raycast *ray, t_player *p, t_map map)
 {
-	ray->aTan = 1 / tan(ray->ang);
+	ray->a_tan = 1 / tan(ray->ang);
 	if(ray->ang < M_PI){
 		ray->hor[1] = (((int)p->y>>5)<<5) -0.0001;
-		ray->hor[0] = (p->y - ray->hor[1]) * ray->aTan + p->x;
+		ray->hor[0] = (p->y - ray->hor[1]) * ray->a_tan + p->x;
 		ray->offset[1] = -SIZE;
-		ray->offset[0] = -ray->offset[1] * ray->aTan;
+		ray->offset[0] = -ray->offset[1] * ray->a_tan;
 	}
 	else if (ray->ang > M_PI)
-	{ 
+	{
 		ray->hor[1] = (((int)p->y>>5)<<5)+SIZE;
-		ray->hor[0] = (p->y - ray->hor[1]) * ray->aTan + p->x;
+		ray->hor[0] = (p->y - ray->hor[1]) * ray->a_tan + p->x;
 		ray->offset[1]= SIZE;
-		ray->offset[0] = -ray->offset[1] * ray->aTan;
+		ray->offset[0] = -ray->offset[1] * ray->a_tan;
 	}
 	else if (ray->ang == 0 || ray->ang == M_PI)
 	{
@@ -39,7 +39,7 @@ void	h_rays(t_raycast *ray, t_player *p, t_map map)
 		ray->hor[1] = p->y;
 		ray->dof = ray->max_dof;
 	}
-	
+
 	while (ray->dof < ray->max_dof)
 	{
 		ray->map[0] = (int)(ray->hor[0])>>5;
@@ -49,7 +49,7 @@ void	h_rays(t_raycast *ray, t_player *p, t_map map)
 			&& ray->map[1] < map.map_height	\
 			&& map.map[ray->map[1]][ray->map[0]] == '1')
 		{
-			ray->hor[2] = dist(p->x, p->y, ray->hor[0], ray->hor[1]); 
+			ray->hor[2] = dist(p->x, p->y, ray->hor[0], ray->hor[1]);
 			ray->dof = ray->max_dof;
 		}
 		else
@@ -63,19 +63,19 @@ void	h_rays(t_raycast *ray, t_player *p, t_map map)
 
 void	v_rays(t_raycast *ray, t_player *p, t_map map)
 {
-	ray->aTan = tan(ray->ang);
+	ray->a_tan = tan(ray->ang);
 	if(ray->ang < M_PI / 2 || ray->ang > 3 * M_PI / 2){
 		ray->ver[0] = (((int)p->x>>5)<<5) + SIZE;
-		ray->ver[1] = (p->x - ray->ver[0]) * ray->aTan + p->y;
+		ray->ver[1] = (p->x - ray->ver[0]) * ray->a_tan + p->y;
 		ray->offset[0] = SIZE;
-		ray->offset[1] = -ray->offset[0] * ray->aTan;
+		ray->offset[1] = -ray->offset[0] * ray->a_tan;
 	}
 	else if (ray->ang > M_PI / 2 && ray->ang < 3 * M_PI / 2)
-	{ 
+	{
 		ray->ver[0] = (((int)p->x>>5)<<5) + -0.0001;
-		ray->ver[1] = (p->x - ray->ver[0]) * ray->aTan + p->y;
+		ray->ver[1] = (p->x - ray->ver[0]) * ray->a_tan + p->y;
 		ray->offset[0] = -SIZE;
-		ray->offset[1] = -ray->offset[0] * ray->aTan;
+		ray->offset[1] = -ray->offset[0] * ray->a_tan;
 	}
 	else if (ray->ang == M_PI / 2 || ray->ang == 3 * M_PI / 2)
 	{
@@ -124,7 +124,7 @@ static void	reset_params(t_raycast *ray, t_data *game)
 	ray->ver[2] = 1000000000;
 	ray->offset[0] = 0;
 	ray->offset[1] = 0;
-	ray->aTan = 0;
+	ray->a_tan = 0;
 	ray->dof = 0;
 	if (ray->ang < 0)
 		ray->ang += 2 * M_PI;
@@ -135,11 +135,11 @@ static void	reset_params(t_raycast *ray, t_data *game)
 void	raycast(t_data *game)
 {
 	t_raycast ray;
-	
+
 	init_raycast(&ray, game);
 	while (++ray.rays < MAX_RAYS)
 	{
-		
+
 		reset_params(&ray, game);
 		h_rays(&ray, &(game)->player, game->map);
 		v_rays(&ray, &(game)->player, game->map);

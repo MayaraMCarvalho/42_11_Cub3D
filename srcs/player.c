@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
+/*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 17:12:56 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/02/26 18:33:43 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/02/27 09:59:40 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,16 @@ void	init_player(t_data *game)
 	int		x;
 	int		y;
 	char	c;
-	t_player	*player = &(game)->player;
-	
+	t_player	*player;
+
+	player = &(game)->player;
 	y = -1;
 	while (++y < game->map.map_height)
 	{
 		x = -1;
 		while (++x < game->map.map_width)
 		{
-			if(ft_isalpha(game->map.map[y][x]))
+			if (ft_isalpha(game->map.map[y][x]))
 			{
 				c = game->map.map[y][x];
 				player->x = (x + 0.5) * SIZE;
@@ -43,5 +44,4 @@ void	init_player(t_data *game)
 		player->ang = M_PI;
 	else if (c == 'E')
 		player->ang = 0;
-
 }

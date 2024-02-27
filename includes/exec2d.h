@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec2d.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
+/*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 19:08:22 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/02/25 18:26:49 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/02/27 09:17:27 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,11 @@
 
 # include "cub3d.h"
 
-typedef struct s_data	t_data;
-typedef struct s_img	t_img;
-typedef struct s_player	t_player;
-typedef struct s_set	t_sat;
-
-typedef	struct s_raycast t_raycast;
+typedef struct s_data		t_data;
+typedef struct s_img		t_img;
+typedef struct s_player		t_player;
+typedef struct s_set		t_sat;
+typedef struct s_raycast	t_raycast;
 
 // typedef	struct s_raycast
 // {

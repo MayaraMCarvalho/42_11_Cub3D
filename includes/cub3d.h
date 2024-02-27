@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
+/*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 22:19:50 by macarval          #+#    #+#             */
-/*   Updated: 2024/02/25 18:25:13 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/02/27 09:57:13 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,14 @@
 # include "keycode.h"
 
 /* Window */
-# define WIN_W 1200
-# define WIN_H 800
+# define WIN_W		1200
+# define WIN_H		800
 
 /* Raycast */
-#define FOV			66
-#define MAX_RAYS	WIN_W
-#define	SIZE		32
-#define	SPEED		5
-
+# define FOV		66
+# define MAX_RAYS	WIN_W
+# define SIZE		32
+# define SPEED		5
 
 /* Events */
 // # define LEFT_CLICK 1
@@ -55,13 +54,13 @@ typedef struct s_player
 	float	ang;
 }	t_player;
 
-typedef	struct s_raycast
+typedef struct s_raycast
 {
 	float	hor[3];
 	float	ver[3];
 	float	offset[2];
 	float	ang;
-	float	aTan;
+	float	a_tan;
 	int		rays;
 	int		dof;
 	int		max_dof;
@@ -118,9 +117,14 @@ typedef struct s_data
 
 void	inicialize(t_data *game);
 
+/* draw.c */
+void	draw(t_data *game);
+void	draw_walls(t_img *img, int tam, int x, int color);
+
 /* event.c */
-int		handle_keypress(int keysym, t_data	*data);
 int		key_press(int key, t_data *game);
+void	verify_key(int key, t_data *game);
+int		handle_keypress(int keysym, t_data	*data);
 
 /* free.c */
 void	free_map(t_data *game);
@@ -135,6 +139,9 @@ void	process_map(t_data *game, int final_set);
 char	*get_map_init(t_data *game, int final_set);
 int		check_neighbors(t_data *game, int j, int i, char *pattern);
 
+/* player.c */
+void	init_player(t_data *game);
+
 /* process.c */
 int		process_settings(t_data *game);
 int		get_color(char	*line, t_color *color);
@@ -142,11 +149,16 @@ int		process_line(char *line, t_data *game);
 int		get_textures(t_data *game, char **split);
 int		set_variables(t_data *game, char **split, char *line);
 
+/* raycast_walls.c */
+void	get_walls(t_data *game, t_raycast *ray);
+
+/* raycast.c*/
+void	raycast(t_data *game);
+
 /* util.c */
 char	*strchr_rev(const char *str, int c);
 int		strcmp_mod(const char *s1, const char *s2);
 void	terminate(t_data *game);
-
 
 /* validation.c */
 void	validate_map(t_data *game);
@@ -159,22 +171,5 @@ int		validate_errors(t_data *game, int j, int i);
 void	init_window(t_data *game);
 void	exec_window(t_data *game);
 int		close_window(t_data *data);
-
-/* player.c */
-void	init_player(t_data *game);
-
-/* draw.c */
-void	draw(t_data *game);
-void	draw_walls(t_img *img, int tam, int x, int color);
-
-/* raycast.c*/
-void	raycast(t_data *game);
-
-/* raycast_walls.c */
-void    get_walls(t_data *game, t_raycast *ray);
-
-// /* Images */
-// void	create_img(t_data *data);
-// void	img_pix_put(t_data *data, int x, int y, int color);
 
 #endif

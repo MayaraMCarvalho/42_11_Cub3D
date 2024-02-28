@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 10:03:34 by macarval          #+#    #+#             */
-/*   Updated: 2024/02/27 12:48:16 by macarval         ###   ########.fr       */
+/*   Updated: 2024/02/28 10:53:01 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ void	player_move(t_data *game, float next_x, float next_y)
 
 int	key_press(int key, t_data *game)
 {
-	verify_key(key, game);
-	draw(game);
+	if (key != ESC_KEY && verify_key(key, game))
+		draw(game);
 	return (0);
 }
 
@@ -40,33 +40,44 @@ int	key_press_esc(int key, t_data *game)
 {
 	if (key == ESC_KEY)
 		close_window(game);
-	draw(game);
 	return (0);
 }
 
-void	verify_key(int key, t_data *game)
+int	verify_key(int key, t_data *game)
 {
 	t_player	*player;
 	float		cos_a;
 	float		sin_a;
+	int			control;
 
+	control = 0;
 	player = &(game)->player;
 	cos_a = cos(player->ang) * SPEED;
 	sin_a = -sin(player->ang) * SPEED;
-	if (key == W_KEY)
+	if (key == W_KEY && ++control)
 		player_move(game, player->x + cos_a, player->y + sin_a);
-	if (key == S_KEY)
+	if (key == S_KEY && ++control)
 		player_move(game, player->x - cos_a, player->y - sin_a);
-	if (key == A_KEY)
+	if (key == A_KEY && ++control)
 		player_move(game, player->x - SPEED, player->y);
-	if (key == D_KEY)
+	if (key == D_KEY && ++control)
 		player_move(game, player->x + SPEED, player->y);
-	if (key == LEFT_KEY)
+	control += update_ang(key, player);
+	return (control);
+}
+
+int	update_ang(int key, t_player *player)
+{
+	int	control;
+
+	control = 0;
+	if (key == LEFT_KEY && ++control)
 		player->ang += 0.1;
-	if (key == RIGHT_KEY)
+	if (key == RIGHT_KEY && ++control)
 		player->ang -= 0.1;
-	if (player->ang < 0)
+	if (player->ang < 0 && ++control)
 		player->ang += 2 * M_PI;
-	if (player->ang > (2 * M_PI -0.00001))
+	if (player->ang > (2 * M_PI -0.00001) && ++control)
 		player->ang -= 2 * M_PI;
+	return (control);
 }

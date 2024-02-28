@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 22:19:50 by macarval          #+#    #+#             */
-/*   Updated: 2024/02/27 13:10:40 by macarval         ###   ########.fr       */
+/*   Updated: 2024/02/28 10:17:29 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,8 +123,9 @@ void	draw_walls(t_img *img, int tam, int x, int color);
 
 /* event.c */
 int		key_press(int key, t_data *game);
-void	verify_key(int key, t_data *game);
+int		verify_key(int key, t_data *game);
 int		key_press_esc(int key, t_data *game);
+int		update_ang(int key, t_player *player);
 int		handle_keypress(int keysym, t_data	*data);
 
 /* free.c */

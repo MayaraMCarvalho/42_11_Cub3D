@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 12:54:24 by macarval          #+#    #+#             */
-/*   Updated: 2024/02/28 10:49:12 by macarval         ###   ########.fr       */
+/*   Updated: 2024/02/29 11:07:06 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ void	v_rays(t_raycast *ray, t_player *p, t_map map)
 			ray->dof++;
 		}
 	}
-	// ray->dof = 0;
 }
 
 void	set_v_rays(t_raycast *ray, t_player *p)

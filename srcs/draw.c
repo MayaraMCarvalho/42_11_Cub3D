@@ -6,18 +6,18 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 17:00:39 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/02/28 10:18:59 by macarval         ###   ########.fr       */
+/*   Updated: 2024/02/29 09:36:23 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static int	convert_color(t_color color)
+int	convert_color(t_color color)
 {
 	return ((color.r << 16) + (color.g << 8) + color.b);
 }
 
-static void	draw_background(t_img *img, int color, char local)
+void	draw_background(t_img *img, int color, char local)
 {
 	int	x;
 	int	y;

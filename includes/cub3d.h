@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 22:19:50 by macarval          #+#    #+#             */
-/*   Updated: 2024/02/28 10:17:29 by macarval         ###   ########.fr       */
+/*   Updated: 2024/02/29 08:27:58 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,9 @@ void	inicialize(t_data *game);
 
 /* draw.c */
 void	draw(t_data *game);
+int		convert_color(t_color color);
 void	draw_walls(t_img *img, int tam, int x, int color);
+void	draw_background(t_img *img, int color, char local);
 
 /* event.c */
 int		key_press(int key, t_data *game);

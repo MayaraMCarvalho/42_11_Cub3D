@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 09:00:14 by macarval          #+#    #+#             */
-/*   Updated: 2024/02/29 11:05:58 by macarval         ###   ########.fr       */
+/*   Updated: 2024/03/02 11:49:54 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	validate_errors(t_data *game, int j, int i)
 		|| (game->map.map[j][i] == '0'
 		&& !check_neighbors(game, j, i, "01NSEW")))
 		exit_err(NULL, game, 16, ERR_MAP_OPEN);
-	if (!ft_strchr("01NSEW\t\n ", game->map.map[j][i]))
+	if (!ft_strchr("01NSEW\n ", game->map.map[j][i]))
 		exit_err(NULL, game, 17, ERR_MAP_DISALLOW);
 	if (ft_strchr("NSEW", game->map.map[j][i]))
 	{

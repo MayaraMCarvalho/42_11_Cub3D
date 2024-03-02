@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 17:50:49 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/02/29 13:53:25 by macarval         ###   ########.fr       */
+/*   Updated: 2024/02/29 14:04:38 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	get_walls(t_data *game, t_raycast *ray)
 	int		color;
 
 	distance = ray->ver[2];
-	color = 0x111e99;
+	color = 0x4a0475;
 	if (distance > ray->hor[2])
 	{
 		color = 0x7202b8;

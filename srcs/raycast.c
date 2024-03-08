@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 17:20:14 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/02/28 10:20:29 by macarval         ###   ########.fr       */
+/*   Updated: 2024/03/07 21:24:20 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ void	init_raycast(t_raycast *ray, t_data *game)
 {
 	ray->rays = -1;
 	ray->ang = game->player.ang + (M_PI / 6);
-	if (game->map.map_height > game->map.map_width)
-		ray->max_dof = game->map.map_height;
+	if (game->map.height > game->map.width)
+		ray->max_dof = game->map.height;
 	else
-		ray->max_dof = game->map.map_width;
+		ray->max_dof = game->map.width;
 }
 
 static void	reset_params(t_raycast *ray, t_data *game)

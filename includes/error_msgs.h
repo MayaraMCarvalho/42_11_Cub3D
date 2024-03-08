@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 23:25:22 by macarval          #+#    #+#             */
-/*   Updated: 2024/01/16 16:03:49 by macarval         ###   ########.fr       */
+/*   Updated: 2024/03/05 17:01:31 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 # define ERR_COLOR "\nError\nInvalid Color Settings\n\n"
 # define ERR_TEX "\nError\nInvalid Texture Settings\n\n"
 # define ERR_MORE "\nError\nConfiguration items are more\n\n"
+# define ERR_XPM "\nError\nTexture not found\n\n"
 
 /* MLX errors*/
 # define ERR_MLX_WIN "Fails to set up the connection to the X server\n\n"

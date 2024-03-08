@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 12:54:24 by macarval          #+#    #+#             */
-/*   Updated: 2024/02/29 11:07:06 by macarval         ###   ########.fr       */
+/*   Updated: 2024/03/05 16:09:41 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void	h_rays(t_raycast *ray, t_player *p, t_map map)
 		ray->map[0] = (int)(ray->hor[0]) >> 5;
 		ray->map[1] = (int)(ray->hor[1]) >> 5;
 		if (ray->map[0] >= 0 && ray->map[1] >= 0
-			&& ray->map[0] < map.map_width
-			&& ray->map[1] < map.map_height
+			&& ray->map[0] < map.width
+			&& ray->map[1] < map.height
 			&& map.map[ray->map[1]][ray->map[0]] == '1')
 		{
 			ray->hor[2] = dist(p->x, p->y, ray->hor[0], ray->hor[1]);
@@ -70,8 +70,8 @@ void	v_rays(t_raycast *ray, t_player *p, t_map map)
 		ray->map[0] = (int)(ray->ver[0]) >> 5;
 		ray->map[1] = (int)(ray->ver[1]) >> 5;
 		if (ray->map[0] >= 0 && ray->map[1] >= 0
-			&& ray->map[0] < map.map_width
-			&& ray->map[1] < map.map_height
+			&& ray->map[0] < map.width
+			&& ray->map[1] < map.height
 			&& map.map[ray->map[1]][ray->map[0]] == '1')
 		{
 			ray->ver[2] = dist(p->x, p->y, ray->ver[0], ray->ver[1]);

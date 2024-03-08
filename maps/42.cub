@@ -1,7 +1,7 @@
-      NO       ./textures/42_NO.xpm
-SO ./textures/42_SO.xpm
-     WE ./textures/42_WE.xpm
-EA ./textures/42_EA.xpm
+      NO       ./textures/areia80.xpm
+SO ./textures/pedra_rosa80.xpm
+     WE ./textures/fogo80.xpm
+EA ./textures/pedra_preta80.xpm
 
 F    42,42,42
 C 142,142,142

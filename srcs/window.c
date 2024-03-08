@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 15:17:55 by macarval          #+#    #+#             */
-/*   Updated: 2024/02/28 16:59:25 by macarval         ###   ########.fr       */
+/*   Updated: 2024/03/07 18:04:36 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int	close_window(t_data	*game)
 {
 	mlx_destroy_window(game->mlx, game->win);
 	mlx_destroy_image(game->mlx, game->img.img);
+	free_textures(game);
 	mlx_destroy_display(game->mlx);
 	terminate(game);
 	return (0);

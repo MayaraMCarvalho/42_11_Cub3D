@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 17:50:49 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/02/29 14:04:38 by macarval         ###   ########.fr       */
+/*   Updated: 2024/03/07 23:13:36 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,11 @@ void	get_walls(t_data *game, t_raycast *ray)
 	float	max;
 	float	tam;
 	float	distance;
-	int		color;
+	double	ang_abs;//
 
 	distance = ray->ver[2];
-	color = 0x4a0475;
 	if (distance > ray->hor[2])
-	{
-		color = 0x7202b8;
 		distance = ray->hor[2];
-	}
 	max = (float) WIN_H;
 	if (max < WIN_W)
 		max = WIN_W;
@@ -33,5 +29,17 @@ void	get_walls(t_data *game, t_raycast *ray)
 	tam = ((1.2 * max) - 20) * (max - 0.1) / (distance - 0.1) / 100;
 	if (tam - floor(tam) > 0.4)
 		tam += 1.0;
-	draw_walls(&game->img, tam, ray->rays, color);
+	//
+	ang_abs = fmod((fmod(game->player.ang, 2 * 3.14159265359)
+				+ ray->ang), 2 * 3.14159265359);
+	if (ang_abs >= 0 && ang_abs < PI / 2)
+		distance = 2;
+	else if (ang_abs >= PI / 2 && ang_abs < PI)
+		distance = 1;
+	else if (ang_abs >= PI && ang_abs < 3 * PI / 2)
+		distance = 4;
+	else
+		distance = 3;
+	//
+	draw_walls(game, tam, ray->rays, distance);
 }

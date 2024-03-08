@@ -6,16 +6,11 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 17:00:39 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/02/29 09:36:23 by macarval         ###   ########.fr       */
+/*   Updated: 2024/03/07 23:07:25 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-int	convert_color(t_color color)
-{
-	return ((color.r << 16) + (color.g << 8) + color.b);
-}
 
 void	draw_background(t_img *img, int color, char local)
 {
@@ -33,7 +28,7 @@ void	draw_background(t_img *img, int color, char local)
 	}
 }
 
-void	draw_walls(t_img *img, int tam, int x, int color)
+void	draw_walls(t_data *game, int tam, int x, int guide)
 {
 	int	y;
 
@@ -41,7 +36,10 @@ void	draw_walls(t_img *img, int tam, int x, int color)
 	while (++x < WIN_W)
 	{
 		while (++y <= (WIN_H + tam) / 2)
-			put_pixel_img(img, x, y, color);
+		{
+			put_pixel_img(&game->img, x, y,
+				get_pixel_color(game, x, y, guide));
+		}
 	}
 }
 

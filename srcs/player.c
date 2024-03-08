@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 17:12:56 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/02/27 13:10:33 by macarval         ###   ########.fr       */
+/*   Updated: 2024/03/05 16:08:01 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ void	init_player(t_data *game)
 
 	player = &(game)->player;
 	y = -1;
-	while (++y < game->map.map_height)
+	while (++y < game->map.height)
 	{
 		x = -1;
-		while (++x < game->map.map_width)
+		while (++x < game->map.width)
 		{
 			if (ft_isalpha(game->map.map[y][x]))
 			{

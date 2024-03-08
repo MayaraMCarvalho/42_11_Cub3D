@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 15:58:38 by macarval          #+#    #+#             */
-/*   Updated: 2024/02/27 09:09:49 by macarval         ###   ########.fr       */
+/*   Updated: 2024/03/07 23:11:45 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,30 @@ void	free_game(t_data *game)
 {
 	if (game->file_name)
 		free(game->file_name);
-	if (game->info.north)
-		free(game->info.north);
-	if (game->info.south)
-		free(game->info.south);
-	if (game->info.west)
-		free(game->info.west);
-	if (game->info.east)
-		free(game->info.east);
+	if (game->info.north.file)
+		free(game->info.north.file);
+	if (game->info.south.file)
+		free(game->info.south.file);
+	if (game->info.west.file)
+		free(game->info.west.file);
+	if (game->info.east.file)
+		free(game->info.east.file);
 	if (game->map.map)
 		free_map(game);
 	if (game->mlx)
 		free(game->mlx);
+}
+
+void	free_textures(t_data *game)
+{
+	if (game->info.north.tex.img)
+		mlx_destroy_image(game->mlx, game->info.north.tex.img);
+	if (game->info.south.tex.img)
+		mlx_destroy_image(game->mlx, game->info.south.tex.img);
+	if (game->info.east.tex.img)
+		mlx_destroy_image(game->mlx, game->info.east.tex.img);
+	if (game->info.west.tex.img)
+		mlx_destroy_image(game->mlx, game->info.west.tex.img);
 }
 
 void	free_map(t_data *game)
@@ -47,7 +59,7 @@ void	free_map(t_data *game)
 	int	i;
 
 	i = -1;
-	while (++i < game->map.map_height)
+	while (++i < game->map.height)
 		free(game->map.map[i]);
 	free(game->map.map);
 }

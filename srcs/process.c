@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 16:58:34 by macarval          #+#    #+#             */
-/*   Updated: 2024/01/16 17:12:31 by macarval         ###   ########.fr       */
+/*   Updated: 2024/03/07 17:48:37 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,17 +87,23 @@ int	set_variables(t_data *game, char **split, char *line)
 
 int	get_textures(t_data *game, char **split)
 {
-	if (!game->info.north && !strcmp_mod(split[0], "NO"))
-		game->info.north = ft_strdup(split[1]);
-	else if (!game->info.south && !strcmp_mod(split[0], "SO"))
-		game->info.south = ft_strdup(split[1]);
-	else if (!game->info.west && !strcmp_mod(split[0], "WE"))
-		game->info.west = ft_strdup(split[1]);
-	else if (!game->info.east && !strcmp_mod(split[0], "EA"))
-		game->info.east = ft_strdup(split[1]);
+	int		control;
+	char	*texture;
+
+	control = 1;
+	texture = strchr_rev(split[1], '\n');
+	if (!game->info.north.file && !strcmp_mod(split[0], "NO"))
+		game->info.north.file = ft_strdup(texture);
+	else if (!game->info.south.file && !strcmp_mod(split[0], "SO"))
+		game->info.south.file = ft_strdup(texture);
+	else if (!game->info.west.file && !strcmp_mod(split[0], "WE"))
+		game->info.west.file = ft_strdup(texture);
+	else if (!game->info.east.file && !strcmp_mod(split[0], "EA"))
+		game->info.east.file = ft_strdup(texture);
 	else
-		return (0);
-	return (1);
+		control = 0;
+	free(texture);
+	return (control);
 }
 
 int	get_color(char	*line, t_color *color)

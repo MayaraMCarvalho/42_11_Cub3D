@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 22:19:50 by macarval          #+#    #+#             */
-/*   Updated: 2024/02/29 08:27:58 by macarval         ###   ########.fr       */
+/*   Updated: 2024/03/07 23:11:36 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,6 @@
 # define SIZE		32
 # define SPEED		5
 
-/* Events */
-// # define LEFT_CLICK 1
-// # define MIDDLE_CLICK 2
-// # define RIGHT_CLICK 3
-// # define SCROLL_UP 4
-// # define SCROLL_DOWN 5
 typedef struct s_player
 {
 	int		map[2];
@@ -85,18 +79,26 @@ typedef struct s_color
 
 typedef struct s_map
 {
-	int		map_init;
-	int		map_width;
-	int		map_height;
+	int		init;
+	int		width;
+	int		height;
 	char	**map;
 }	t_map;
 
+typedef struct s_tex
+{
+	char		*file;
+	int			width;
+	int			height;
+	t_img		tex;
+}	t_tex;
+
 typedef struct s_info
 {
-	char		*north;
-	char		*south;
-	char		*west;
-	char		*east;
+	t_tex		north;
+	t_tex		south;
+	t_tex		west;
+	t_tex		east;
 	t_color		floor;
 	t_color		ceiling;
 }	t_info;
@@ -117,10 +119,16 @@ typedef struct s_data
 
 void	inicialize(t_data *game);
 
+/* data.c */
+void	validate_map(t_data *game);
+void	validate_extension(char *file);
+void	validate_open(char *file, t_data *game);
+void	get_data(char *argv[], t_data *game);
+int		validate_errors(t_data *game, int j, int i);
+
 /* draw.c */
 void	draw(t_data *game);
-int		convert_color(t_color color);
-void	draw_walls(t_img *img, int tam, int x, int color);
+void	draw_walls(t_data *game, int tam, int x, int guide);
 void	draw_background(t_img *img, int color, char local);
 
 /* event.c */
@@ -134,6 +142,7 @@ int		handle_keypress(int keysym, t_data	*data);
 void	free_map(t_data *game);
 void	free_game(t_data *game);
 void	free_split(char ***split);
+void	free_textures(t_data *game);
 void	exit_err(char *line, t_data *game, int exit_code, char *err);
 
 /* h_raycast.c */
@@ -146,7 +155,7 @@ void	v_rays(t_raycast *ray, t_player *p, t_map map);
 void	get_map(t_data *game);
 void	alloc_map(t_data *game);
 void	process_map(t_data *game, int final_set);
-char	*get_map_init(t_data *game, int final_set);
+char	*get_init(t_data *game, int final_set);
 int		check_neighbors(t_data *game, int j, int i, char *pattern);
 
 /* player.c */
@@ -167,17 +176,15 @@ void	get_walls(t_data *game, t_raycast *ray);
 void	raycast(t_data *game);
 int		dist(int x1, int y1, int x2, int y2);
 
+/* textures.c */
+int		convert_color(t_color color);
+void	get_data_textures(t_data *game, t_tex *tex);
+int		get_pixel_color(t_data *game, int x, int y, int guide);
+
 /* util.c */
 char	*strchr_rev(const char *str, int c);
 int		strcmp_mod(const char *s1, const char *s2);
 void	terminate(t_data *game);
-
-/* validation.c */
-void	validate_map(t_data *game);
-void	validate_extension(char *file);
-void	validate_open(char *file, t_data *game);
-void	validations(char *argv[], t_data *game);
-int		validate_errors(t_data *game, int j, int i);
 
 /* window.c */
 void	init_window(t_data *game);

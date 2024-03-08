@@ -6,13 +6,13 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 09:00:14 by macarval          #+#    #+#             */
-/*   Updated: 2024/03/02 11:49:54 by macarval         ###   ########.fr       */
+/*   Updated: 2024/03/07 18:12:59 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	validations(char *argv[], t_data *game)
+void	get_data(char *argv[], t_data *game)
 {
 	int		final_set;
 
@@ -22,6 +22,10 @@ void	validations(char *argv[], t_data *game)
 	process_map(game, final_set);
 	get_map(game);
 	validate_map(game);
+	get_data_textures(game, &game->info.north);
+	get_data_textures(game, &game->info.south);
+	get_data_textures(game, &game->info.west);
+	get_data_textures(game, &game->info.east);
 }
 
 void	validate_extension(char *file)
@@ -58,10 +62,10 @@ void	validate_map(t_data *game)
 
 	j = -1;
 	error = 0;
-	while (++j < game->map.map_height && game->map.map[j])
+	while (++j < game->map.height && game->map.map[j])
 	{
 		i = -1;
-		while (++i < game->map.map_width && game->map.map[j][i])
+		while (++i < game->map.width && game->map.map[j][i])
 		{
 			error += validate_errors(game, j, i);
 			if (error > 1)

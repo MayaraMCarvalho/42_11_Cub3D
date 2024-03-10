@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 15:53:37 by macarval          #+#    #+#             */
-/*   Updated: 2024/03/10 17:25:33 by macarval         ###   ########.fr       */
+/*   Updated: 2024/03/10 17:26:49 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,7 @@ t_tex	define_texture(t_data *game, int guide)
 {
 	t_tex	tex;
 
-	tex = game->info.south;11
-	
+	tex = game->info.south;
 	if (guide == EAST)
 		tex = game->info.east;
 	else if (guide == NORTH)

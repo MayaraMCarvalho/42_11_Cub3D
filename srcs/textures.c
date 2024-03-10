@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 15:53:37 by macarval          #+#    #+#             */
-/*   Updated: 2024/03/07 23:04:17 by macarval         ###   ########.fr       */
+/*   Updated: 2024/03/10 17:25:33 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,20 +39,31 @@ int	get_pixel_color(t_data *game, int x, int y, int guide)
 	int		blue;
 	t_tex	tex;
 
-	tex = game->info.south;
-	if (guide == 1)
-		tex = game->info.east;
-	else if (guide == 2)
-		tex = game->info.north;
-	else if (guide == 3)
-		tex = game->info.west;
+	tex = define_texture(game, guide);
 	if (x > tex.width)
 		x %= tex.width;
 	if (y > tex.height)
 		y %= tex.height;
 	index = ((y * tex.tex.line_len) + (x * (tex.tex.bpp / 8)));
+	if (index < 0)
+		index = 0;
 	red = tex.tex.addr[index + 2];
 	green = tex.tex.addr[index + 1];
 	blue = tex.tex.addr[index];
 	return ((red << 16) + (green << 8) + blue);
+}
+
+t_tex	define_texture(t_data *game, int guide)
+{
+	t_tex	tex;
+
+	tex = game->info.south;11
+	
+	if (guide == EAST)
+		tex = game->info.east;
+	else if (guide == NORTH)
+		tex = game->info.north;
+	else if (guide == WEST)
+		tex = game->info.west;
+	return (tex);
 }

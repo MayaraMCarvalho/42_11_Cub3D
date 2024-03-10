@@ -3,43 +3,81 @@
 /*                                                        :::      ::::::::   */
 /*   raycast_walls.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 17:50:49 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/03/07 23:13:36 by macarval         ###   ########.fr       */
+/*   Updated: 2024/03/10 16:53:02 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	get_walls(t_data *game, t_raycast *ray)
+typedef struct s_new_ray
 {
-	float	max;
-	float	tam;
+	int		color;
 	float	distance;
-	double	ang_abs;//
+	int		ray_horizontal_size;
+	int		vertical_line;
+	float	cast_angle;
+	int		line_off;
+	int		line_y;
+}	t_newRay;
 
-	distance = ray->ver[2];
-	if (distance > ray->hor[2])
-		distance = ray->hor[2];
-	max = (float) WIN_H;
-	if (max < WIN_W)
-		max = WIN_W;
-	distance *= cos(game->player.ang - ray->ang);
-	tam = ((1.2 * max) - 20) * (max - 0.1) / (distance - 0.1) / 100;
-	if (tam - floor(tam) > 0.4)
-		tam += 1.0;
-	//
-	ang_abs = fmod((fmod(game->player.ang, 2 * 3.14159265359)
-				+ ray->ang), 2 * 3.14159265359);
-	if (ang_abs >= 0 && ang_abs < PI / 2)
-		distance = 2;
-	else if (ang_abs >= PI / 2 && ang_abs < PI)
-		distance = 1;
-	else if (ang_abs >= PI && ang_abs < 3 * PI / 2)
-		distance = 4;
+void	draw_rectangle(t_data *data, t_point start, t_point end, int color)
+{
+	int	x;
+	int	y;
+
+	y = start.y;
+	while (y <= end.y)
+	{
+		x = start.x;
+		while (x <= end.x)
+		{
+			put_pixel_img(&data->img, x, y, color);
+			x++;
+		}
+		y++;
+	}
+}
+
+static void	set_3d_cast(t_data *game, t_newRay *new, t_raycast *ray)
+{
+	new->cast_angle = game->player.ang - ray->ang;
+	if (new->cast_angle < 0)
+		new->cast_angle += 2 * M_PI;
+	if (new->cast_angle > 2 * M_PI)
+		new->cast_angle -= 2 * M_PI;
+	new->distance = new->distance * cos(new->cast_angle);
+	new->vertical_line = 980 / new->distance;
+	new->line_off = WIN_H / 2 - new->vertical_line / 2;
+	new->line_y = -1;
+	new->ray_horizontal_size = WIN_W / MAX_RAYS;
+}
+
+void get_walls(t_data *game, t_raycast *ray)
+{
+	t_point init;
+	t_point	dest;
+	t_newRay new;
+
+	new.color = 0x800000;
+	if (ray->hor[2] <= ray->ver[2])
+		new.distance = ray->hor[2] / SIZE;
 	else
-		distance = 3;
-	//
-	draw_walls(game, tam, ray->rays, distance);
+	{	
+		new.distance = ray->ver[2] / SIZE;
+		new.color = 0xFA0008;	
+	}
+	
+	set_3d_cast(game, &new, ray);
+	init.x = ray->rays * new.ray_horizontal_size;
+	dest.x = ray->rays * new.ray_horizontal_size + new.ray_horizontal_size;
+	dest.x--;
+	while (++new.line_y < new.vertical_line)
+	{
+		init.y = new.line_y + new.line_off;
+		dest.y = new.line_y + new.line_off;
+		draw_rectangle (game, init, dest, new.color);
+	}
 }

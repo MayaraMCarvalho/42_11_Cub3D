@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 22:19:50 by macarval          #+#    #+#             */
-/*   Updated: 2024/03/07 23:11:36 by macarval         ###   ########.fr       */
+/*   Updated: 2024/03/10 16:34:21 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,21 @@
 
 /* Window */
 # define WIN_W		1200
-# define WIN_H		800
+# define WIN_H		720
 
 /* Raycast */
 # define FOV		66
-# define MAX_RAYS	WIN_W
+# define MAX_RAYS	600
 # define SIZE		32
 # define SPEED		5
+
+typedef struct s_point
+{
+	int	x;
+	int	y;
+	int	color;
+}	t_point;
+
 
 typedef struct s_player
 {

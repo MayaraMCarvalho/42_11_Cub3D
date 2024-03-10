@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec2d.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 19:08:22 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/02/27 09:17:27 by macarval         ###   ########.fr       */
+/*   Updated: 2024/03/09 15:23:38 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,12 @@ typedef struct s_raycast	t_raycast;
 // 	int		map[2];
 // }	t_raycast;
 
-typedef struct s_point
-{
-	int	x;
-	int	y;
-	int	color;
-}	t_point;
+// typedef struct s_point
+// {
+// 	int	x;
+// 	int	y;
+// 	int	color;
+// }	t_point;
 
 typedef struct s_bres
 {

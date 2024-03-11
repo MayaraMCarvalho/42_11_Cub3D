@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 17:00:39 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/03/07 23:07:25 by macarval         ###   ########.fr       */
+/*   Updated: 2024/03/11 10:07:53 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,20 +28,20 @@ void	draw_background(t_img *img, int color, char local)
 	}
 }
 
-void	draw_walls(t_data *game, int tam, int x, int guide)
-{
-	int	y;
+// void	draw_walls(t_data *game, int tam, int x, int guide)
+// {
+// 	int	y;
 
-	y = (WIN_H - tam) / 2;
-	while (++x < WIN_W)
-	{
-		while (++y <= (WIN_H + tam) / 2)
-		{
-			put_pixel_img(&game->img, x, y,
-				get_pixel_color(game, x, y, guide));
-		}
-	}
-}
+// 	y = (WIN_H - tam) / 2;
+// 	while (++x < WIN_W)
+// 	{
+// 		while (++y <= (WIN_H + tam) / 2)
+// 		{
+// 			put_pixel_img(&game->img, x, y,
+// 				get_pixel_color(game, x, y, guide));
+// 		}
+// 	}
+// }
 
 void	draw(t_data *game)
 {

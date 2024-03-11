@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 15:53:37 by macarval          #+#    #+#             */
-/*   Updated: 2024/03/10 17:32:25 by macarval         ###   ########.fr       */
+/*   Updated: 2024/03/11 18:43:35 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,13 @@ int	get_pixel_color(t_data *game, int x, int y, int guide)
 	t_tex	tex;
 
 	tex = define_texture(game, guide);
+	x *= 0.5;
+	y *= 0.5;
 	if (x > tex.width)
 		x %= tex.width;
 	if (y > tex.height)
 		y %= tex.height;
-	index = ((y * tex.tex.line_len) + (x * (tex.tex.bpp / 8)));
+	index = (y * tex.tex.line_len) + (x * (tex.tex.bpp / 8));
 	if (index < 0)
 		index = 0;
 	red = tex.tex.addr[index + 2];

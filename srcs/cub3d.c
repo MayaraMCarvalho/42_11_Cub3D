@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 22:15:03 by macarval          #+#    #+#             */
-/*   Updated: 2024/03/07 18:13:20 by macarval         ###   ########.fr       */
+/*   Updated: 2024/03/12 11:31:59 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@ int	main(int argc, char *argv[])
 	if (argc != 2 || argv[1][0] == '\0')
 	{
 		printf("Enter a valid file\n");
-		printf(ERR_ARG);
-		exit (1);
+		exit_err(NULL, &game, 1, ERR_ARG);
 	}
 	else
 	{
@@ -37,6 +36,7 @@ int	main(int argc, char *argv[])
 
 void	inicialize(t_data *game)
 {
+	game->file_name = NULL;
 	game->info.north.file = NULL;
 	game->info.south.file = NULL;
 	game->info.west.file = NULL;

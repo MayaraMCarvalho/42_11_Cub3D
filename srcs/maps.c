@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 09:03:43 by macarval          #+#    #+#             */
-/*   Updated: 2024/03/05 16:09:23 by macarval         ###   ########.fr       */
+/*   Updated: 2024/03/12 11:42:54 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ int	check_neighbors(t_data *game, int j, int i, char *pattern)
 		return (0);
 	if (!ft_strchr("01NSEW\t\n ", map[j][i + 1])
 		|| !ft_strchr("01NSEW\t\n ", map[j + 1][i]))
-		exit_err(NULL, game, 17, ERR_MAP_DISALLOW);
+		exit_err(NULL, game, 24, ERR_MAP_DISALLOW);
 	if (!ft_strchr(pattern, map[j][i - 1])
 		|| !ft_strchr(pattern, map[j][i + 1])
 		|| !ft_strchr(pattern, map[j - 1][i])

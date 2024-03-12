@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 15:53:37 by macarval          #+#    #+#             */
-/*   Updated: 2024/03/11 18:43:35 by macarval         ###   ########.fr       */
+/*   Updated: 2024/03/12 11:46:50 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,7 @@ void	get_data_textures(t_data *game, t_tex *tex)
 	tex->tex.img = mlx_xpm_file_to_image(game->mlx, tex->file,
 			&tex->width, &tex->height);
 	if (!tex->tex.img)
-	{
-		printf("%s", ERR_XPM);
-		game->exit_code = 21;
-		close_window(game);
-	}
+		exit_err(NULL, game, 21, ERR_XPM);
 	tex->tex.addr = mlx_get_data_addr(tex->tex.img, &tex->tex.bpp,
 			&tex->tex.line_len, &tex->tex.endian);
 }

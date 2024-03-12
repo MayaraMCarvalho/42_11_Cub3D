@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 15:58:38 by macarval          #+#    #+#             */
-/*   Updated: 2024/03/07 23:11:45 by macarval         ###   ########.fr       */
+/*   Updated: 2024/03/12 11:56:43 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,17 @@ void	free_map(t_data *game)
 
 void	exit_err(char *line, t_data *game, int exit_code, char *err)
 {
-	printf("%s", err);
-	free_game(game);
+	if (errno == -1)
+		perror("general error");
+	else
+		ft_putendl_fd(err, 2);
 	if (line)
 		free(line);
+	if (game)
+	{
+		game->exit_code = exit_code;
+		if (game->mlx)
+			close_window(game);
+	}
 	exit (exit_code);
 }

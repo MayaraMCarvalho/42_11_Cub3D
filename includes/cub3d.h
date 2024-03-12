@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 22:19:50 by macarval          #+#    #+#             */
-/*   Updated: 2024/03/11 10:09:08 by macarval         ###   ########.fr       */
+/*   Updated: 2024/03/12 11:48:44 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ void	inicialize(t_data *game);
 
 /* data.c */
 void	validate_map(t_data *game);
-void	validate_extension(char *file);
+void	validate_extension(char *file, t_data *game);
 void	validate_open(char *file, t_data *game);
 void	get_data(char *argv[], t_data *game);
 int		validate_errors(t_data *game, int j, int i);
@@ -212,7 +212,6 @@ int		get_pixel_color(t_data *game, int x, int y, int guide);
 /* util.c */
 char	*strchr_rev(const char *str, int c);
 int		strcmp_mod(const char *s1, const char *s2);
-void	terminate(t_data *game);
 
 /* window.c */
 void	init_window(t_data *game);

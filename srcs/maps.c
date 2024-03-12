@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 09:03:43 by macarval          #+#    #+#             */
-/*   Updated: 2024/03/12 11:42:54 by macarval         ###   ########.fr       */
+/*   Updated: 2024/03/12 12:06:27 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,12 @@ char	*get_init(t_data *game, int final_set)
 	{
 		game->map.init++;
 		free(line);
+		line = NULL;
 		line = get_next_line(game->fd);
 	}
-	if (line[0] == 'F' || line[0] == 'C')
+	if (line && (line[0] == 'F' || line[0] == 'C'))
 		exit_err(line, game, 14, ERR_COLOR);
-	if (line[0] == 'N' || line[0] == 'S' || line[0] == 'W' || line[0] == 'E')
+	if (line && (line[0] == 'N' || line[0] == 'S' || line[0] == 'W' || line[0] == 'E'))
 		exit_err(line, game, 15, ERR_TEX);
 	game->map.init += final_set;
 	return (line);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 22:19:50 by macarval          #+#    #+#             */
-/*   Updated: 2024/03/11 10:09:08 by macarval         ###   ########.fr       */
+/*   Updated: 2024/03/13 19:47:36 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,19 +62,6 @@ typedef struct s_player
 	float	ang;
 }	t_player;
 
-typedef struct s_raycast
-{
-	float	hor[3];
-	float	ver[3];
-	float	offset[2];
-	float	ang;
-	float	a_tan;
-	int		rays;
-	int		dof;
-	int		max_dof;
-	int		map[2];
-}	t_raycast;
-
 typedef struct s_img
 {
 	void	*img;
@@ -83,6 +70,31 @@ typedef struct s_img
 	int		line_len;
 	int		endian;
 }	t_img;
+
+typedef struct s_tex
+{
+	char		*file;
+	int			width;
+	int			height;
+	t_img		tex;
+}	t_tex;
+
+typedef struct s_raycast
+{
+	float	hor[3];
+	float	ver[3];
+	float	offset[2];
+	float	distance;
+	float	ang;
+	float	a_tan;
+	int		rays;
+	int		dof;
+	int		max_dof;
+	int		map[2];
+	int		pixel[2];
+	t_tex	tex;
+}	t_raycast;
+
 
 typedef struct s_color
 {
@@ -98,14 +110,6 @@ typedef struct s_map
 	int		height;
 	char	**map;
 }	t_map;
-
-typedef struct s_tex
-{
-	char		*file;
-	int			width;
-	int			height;
-	t_img		tex;
-}	t_tex;
 
 typedef struct s_info
 {
@@ -205,7 +209,7 @@ int		dist(int x1, int y1, int x2, int y2);
 
 /* textures.c */
 int		convert_color(t_color color);
-t_tex	define_texture(t_data *game, int guide);
+// t_tex	define_texture(t_data *game, int guide);
 void	get_data_textures(t_data *game, t_tex *tex);
 int		get_pixel_color(t_data *game, int x, int y, int guide);
 

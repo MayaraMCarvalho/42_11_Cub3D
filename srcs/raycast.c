@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 17:20:14 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/03/10 15:49:34 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/03/13 18:58:22 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	raycast(t_data *game)
 		reset_params(&ray, game);
 		h_rays(&ray, &(game)->player, game->map);
 		v_rays(&ray, &(game)->player, game->map);
-		ray.ang -= 0.017453 / (MAX_RAYS / FOV);
 		get_walls(game, &ray);
+		ray.ang -= 0.017453 / (MAX_RAYS / FOV);
 	}
 }

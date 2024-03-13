@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 15:53:37 by macarval          #+#    #+#             */
-/*   Updated: 2024/03/11 18:43:35 by macarval         ###   ########.fr       */
+/*   Updated: 2024/03/13 19:22:20 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,40 +31,38 @@ int	convert_color(t_color color)
 	return ((color.r << 16) + (color.g << 8) + color.b);
 }
 
-int	get_pixel_color(t_data *game, int x, int y, int guide)
-{
-	int		index;
-	int		red;
-	int		green;
-	int		blue;
-	t_tex	tex;
+// int	get_pixel_color(t_tex *tex, int x, int y)
+// {
+// 	int		index;
+// 	int		red;
+// 	int		green;
+// 	int		blue;
 
-	tex = define_texture(game, guide);
-	x *= 0.5;
-	y *= 0.5;
-	if (x > tex.width)
-		x %= tex.width;
-	if (y > tex.height)
-		y %= tex.height;
-	index = (y * tex.tex.line_len) + (x * (tex.tex.bpp / 8));
-	if (index < 0)
-		index = 0;
-	red = tex.tex.addr[index + 2];
-	green = tex.tex.addr[index + 1];
-	blue = tex.tex.addr[index];
-	return ((red << 16) + (green << 8) + blue);
-}
+// 	x *= 0.5;
+// 	y *= 0.5;
+// 	if (x > tex->width)
+// 		x %= tex->width;
+// 	if (y > tex->height)
+// 		y %= tex->height;
+// 	index = (y * tex->tex.line_len) + (x * (tex->tex.bpp / 8));
+// 	if (index < 0)
+// 		index = 0;
+// 	red = tex->tex.addr[index + 2];
+// 	green = tex->tex.addr[index + 1];
+// 	blue = tex->tex.addr[index];
+// 	return ((red << 16) + (green << 8) + blue);
+// }
 
-t_tex	define_texture(t_data *game, int guide)
-{
-	t_tex	tex;
+// t_tex	define_texture(t_data *game, int guide)
+// {
+// 	t_tex	tex;
 
-	tex = game->info.south;
-	if (guide == EAST)
-		tex = game->info.east;
-	else if (guide == NORTH)
-		tex = game->info.north;
-	else if (guide == WEST)
-		tex = game->info.west;
-	return (tex);
-}
+// 	tex = game->info.south;
+// 	if (guide == EAST)
+// 		tex = game->info.east;
+// 	else if (guide == NORTH)
+// 		tex = game->info.north;
+// 	else if (guide == WEST)
+// 		tex = game->info.west;
+// 	return (tex);
+// }

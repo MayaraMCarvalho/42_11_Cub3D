@@ -3,14 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 17:00:39 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/03/11 10:07:53 by macarval         ###   ########.fr       */
+/*   Updated: 2024/03/14 18:00:32 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+void	put_pixel_img(t_img *img, int x, int y, int color)
+{
+	char	*dst;
+
+	if (x > WIN_W || y > WIN_H || x < 0 || y < 0)
+		return ;
+	dst = img->addr + (y * img->line_len + x * (img->bpp / 8));
+	*(unsigned int *)dst = color;
+}
 
 void	draw_background(t_img *img, int color, char local)
 {
@@ -27,21 +37,6 @@ void	draw_background(t_img *img, int color, char local)
 			put_pixel_img(img, x, y, color);
 	}
 }
-
-// void	draw_walls(t_data *game, int tam, int x, int guide)
-// {
-// 	int	y;
-
-// 	y = (WIN_H - tam) / 2;
-// 	while (++x < WIN_W)
-// 	{
-// 		while (++y <= (WIN_H + tam) / 2)
-// 		{
-// 			put_pixel_img(&game->img, x, y,
-// 				get_pixel_color(game, x, y, guide));
-// 		}
-// 	}
-// }
 
 void	draw(t_data *game)
 {

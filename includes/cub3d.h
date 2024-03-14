@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 22:19:50 by macarval          #+#    #+#             */
-/*   Updated: 2024/03/13 19:47:36 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/03/14 19:01:22 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@
 
 # include "libft.h"
 # include "error_msgs.h"
-# include "exec2d.h"
 # include "keycode.h"
 
 /* Window */
@@ -38,7 +37,7 @@
 # define FOV		66
 # define MAX_RAYS	600
 # define SIZE		32
-# define SPEED		5
+# define SPEED		3
 
 /* Walls */
 # define PI			3.14159265359
@@ -156,14 +155,13 @@ int		validate_errors(t_data *game, int j, int i);
 
 /* draw.c */
 void	draw(t_data *game);
-void	draw_walls(t_data *game, int tam, int x, int guide);
+void	put_pixel_img(t_img *img, int x, int y, int color);
 void	draw_background(t_img *img, int color, char local);
 
 /* event.c */
 int		key_press(int key, t_data *game);
 int		verify_key(int key, t_data *game);
 int		key_press_esc(int key, t_data *game);
-int		update_ang(int key, t_player *player);
 int		handle_keypress(int keysym, t_data	*data);
 
 /* free.c */

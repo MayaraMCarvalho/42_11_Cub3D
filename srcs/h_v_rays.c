@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   h_v_rays.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 12:54:24 by macarval          #+#    #+#             */
-/*   Updated: 2024/03/05 16:09:41 by macarval         ###   ########.fr       */
+/*   Updated: 2024/03/14 17:59:10 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ void	h_rays(t_raycast *ray, t_player *p, t_map map)
 			&& ray->map[1] < map.height
 			&& map.map[ray->map[1]][ray->map[0]] == '1')
 		{
-			ray->hor[2] = dist(p->x, p->y, ray->hor[0], ray->hor[1]);
+			ray->hor[2] = cos(ray->ang) * (ray->hor[0] - p->x)
+				- sin(ray->ang) * (ray->hor[1] - p->y);
 			ray->dof = ray->max_dof;
 		}
 		else
@@ -74,7 +75,8 @@ void	v_rays(t_raycast *ray, t_player *p, t_map map)
 			&& ray->map[1] < map.height
 			&& map.map[ray->map[1]][ray->map[0]] == '1')
 		{
-			ray->ver[2] = dist(p->x, p->y, ray->ver[0], ray->ver[1]);
+			ray->ver[2] = cos(ray->ang) * (ray->ver[0] - p->x)
+				- sin(ray->ang) * (ray->ver[1] - p->y);
 			ray->dof = ray->max_dof;
 		}
 		else

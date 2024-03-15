@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 23:25:22 by macarval          #+#    #+#             */
-/*   Updated: 2024/03/05 17:01:31 by macarval         ###   ########.fr       */
+/*   Updated: 2024/03/12 11:01:05 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,9 @@
 # define ERR_XPM "\nError\nTexture not found\n\n"
 
 /* MLX errors*/
-# define ERR_MLX_WIN "Fails to set up the connection to the X server\n\n"
-# define ERR_MLX_INIT "Fails to set up the connection to the X server\n\n"
+# define ERR_MLX_WIN "\nError\nError creating mlx window\n\n"
+# define ERR_MLX_IMG "\nError\nError creating mlx image\n\n"
+# define ERR_MLX_INIT "\nError\nMlx initialization error\n\n"
+# define ERR_MLX_ADDR "\nError\nError in mlx addr data collection\n\n"
 
 #endif

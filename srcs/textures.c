@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 15:53:37 by macarval          #+#    #+#             */
-/*   Updated: 2024/03/13 19:22:20 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/03/15 19:40:21 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,7 @@ void	get_data_textures(t_data *game, t_tex *tex)
 	tex->tex.img = mlx_xpm_file_to_image(game->mlx, tex->file,
 			&tex->width, &tex->height);
 	if (!tex->tex.img)
-	{
-		printf("%s", ERR_XPM);
-		game->exit_code = 21;
-		close_window(game);
-	}
+		exit_err(NULL, game, 21, ERR_XPM);
 	tex->tex.addr = mlx_get_data_addr(tex->tex.img, &tex->tex.bpp,
 			&tex->tex.line_len, &tex->tex.endian);
 }
@@ -31,38 +27,42 @@ int	convert_color(t_color color)
 	return ((color.r << 16) + (color.g << 8) + color.b);
 }
 
-// int	get_pixel_color(t_tex *tex, int x, int y)
-// {
-// 	int		index;
-// 	int		red;
-// 	int		green;
-// 	int		blue;
+int	pixel_color(t_tex *tex, int *pixel)
+{
+	int		index;
+	int		red;
+	int		green;
+	int		blue;
 
-// 	x *= 0.5;
-// 	y *= 0.5;
-// 	if (x > tex->width)
-// 		x %= tex->width;
-// 	if (y > tex->height)
-// 		y %= tex->height;
-// 	index = (y * tex->tex.line_len) + (x * (tex->tex.bpp / 8));
-// 	if (index < 0)
-// 		index = 0;
-// 	red = tex->tex.addr[index + 2];
-// 	green = tex->tex.addr[index + 1];
-// 	blue = tex->tex.addr[index];
-// 	return ((red << 16) + (green << 8) + blue);
-// }
+	if (pixel[0] > tex->width)
+		pixel[0] %= tex->width;
+	if (pixel[1] > tex->height)
+		pixel[1] %= tex->height;
+	index = (pixel[1] * tex->tex.line_len) + (pixel[0] * (tex->tex.bpp / 8));
+	if (index < 0)
+		index = 0;
+	red = tex->tex.addr[index + 2];
+	green = tex->tex.addr[index + 1];
+	blue = tex->tex.addr[index];
+	return ((red << 16) + (green << 8) + blue);
+}
 
-// t_tex	define_texture(t_data *game, int guide)
-// {
-// 	t_tex	tex;
+void	set_pixel_texture(t_raycast *ray)
+{
+	int	precision;
 
-// 	tex = game->info.south;
-// 	if (guide == EAST)
-// 		tex = game->info.east;
-// 	else if (guide == NORTH)
-// 		tex = game->info.north;
-// 	else if (guide == WEST)
-// 		tex = game->info.west;
-// 	return (tex);
-// }
+	if (ray->ver[2] < ray->hor[2])
+	{
+		precision = (int)((ray->ver[1] / SIZE) * 100) % 100;
+		ray->pixel[0]= ray->tex.width * precision / 100;
+		if (ray->ang < PI / 2 || ray->ang > 3 * PI / 2)
+			ray->pixel[0] = ray->tex.width - ray->pixel[0] - 1;
+	}
+	else
+	{
+		precision = (int)((ray->hor[0] / SIZE) * 100) % 100;
+		ray->pixel[0] = ray->tex.width * precision / 100;
+		if (ray->ang > PI)
+			ray->pixel[0] = ray->tex.width - ray->pixel[0] - 1;
+	}
+}

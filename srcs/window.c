@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 15:17:55 by macarval          #+#    #+#             */
-/*   Updated: 2024/03/14 18:51:57 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/03/15 19:01:01 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,13 @@
 static void	validation_window_alloc(t_data *game)
 {
 	if (game->mlx == NULL)
-		game->exit_code = 2;
+		exit_err(NULL, game, 2, ERR_MLX_INIT);
 	else if (game->win == NULL)
-		game->exit_code = 3;
+		exit_err(NULL, game, 3, ERR_MLX_WIN);
 	else if (game->img.img == NULL)
-		game->exit_code = 4;
+		exit_err(NULL, game, 4, ERR_MLX_IMG);
 	else if (game->img.addr == NULL)
-		game->exit_code = 5;
-	if (game->exit_code != 0)
-		close_window(game);
+		exit_err(NULL, game, 5, ERR_MLX_ADDR);
 }
 
 void	init_window(t_data *game)
@@ -47,10 +45,20 @@ void	exec_window(t_data *game)
 
 int	close_window(t_data	*game)
 {
-	mlx_destroy_window(game->mlx, game->win);
-	mlx_destroy_image(game->mlx, game->img.img);
-	free_textures(game);
-	mlx_destroy_display(game->mlx);
-	terminate(game);
-	return (0);
+	int	code;
+
+	if (game)
+	{
+		code = game->exit_code;
+		if (game->mlx)
+		{
+			if (game->win)
+				mlx_destroy_window(game->mlx, game->win);
+			mlx_destroy_image(game->mlx, game->img.img);
+			free_textures(game);
+			mlx_destroy_display(game->mlx);
+		}
+		free_game(game);
+	}
+	exit (code);
 }

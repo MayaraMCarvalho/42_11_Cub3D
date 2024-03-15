@@ -6,18 +6,13 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 17:20:14 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/03/13 18:58:22 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/03/15 19:42:11 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	dist(int x1, int y1, int x2, int y2)
-{
-	return (sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1)));
-}
-
-void	init_raycast(t_raycast *ray, t_data *game)
+static void	init_raycast(t_raycast *ray, t_data *game)
 {
 	ray->rays = -1;
 	ray->ang = game->player.ang + (M_PI / 6);

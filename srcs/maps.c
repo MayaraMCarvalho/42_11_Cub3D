@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   maps.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 09:03:43 by macarval          #+#    #+#             */
-/*   Updated: 2024/03/05 16:09:23 by macarval         ###   ########.fr       */
+/*   Updated: 2024/03/15 19:43:11 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,29 @@ char	*get_init(t_data *game, int final_set)
 	{
 		game->map.init++;
 		free(line);
+		line = NULL;
 		line = get_next_line(game->fd);
 	}
-	if (line[0] == 'F' || line[0] == 'C')
+	if (line && (line[0] == 'F' || line[0] == 'C'))
 		exit_err(line, game, 14, ERR_COLOR);
-	if (line[0] == 'N' || line[0] == 'S' || line[0] == 'W' || line[0] == 'E')
+	if (line && (line[0] == 'N' || line[0] == 'S' || line[0] == 'W' || line[0] == 'E'))
 		exit_err(line, game, 15, ERR_TEX);
 	game->map.init += final_set;
 	return (line);
+}
+
+static void	alloc_map(t_data *game)
+{
+	int	i;
+
+	game->map.map = (char **) ft_calloc
+		(game->map.height + 1, sizeof(char *));
+	i = -1;
+	while (++i < game->map.height)
+	{
+		game->map.map[i] = (char *) ft_calloc
+			(game->map.width + 1, sizeof(char));
+	}
 }
 
 void	get_map(t_data *game)
@@ -83,20 +98,6 @@ void	get_map(t_data *game)
 	}
 }
 
-void	alloc_map(t_data *game)
-{
-	int	i;
-
-	game->map.map = (char **) ft_calloc
-		(game->map.height + 1, sizeof(char *));
-	i = -1;
-	while (++i < game->map.height)
-	{
-		game->map.map[i] = (char *) ft_calloc
-			(game->map.width + 1, sizeof(char));
-	}
-}
-
 int	check_neighbors(t_data *game, int j, int i, char *pattern)
 {
 	char	**map;
@@ -108,7 +109,7 @@ int	check_neighbors(t_data *game, int j, int i, char *pattern)
 		return (0);
 	if (!ft_strchr("01NSEW\t\n ", map[j][i + 1])
 		|| !ft_strchr("01NSEW\t\n ", map[j + 1][i]))
-		exit_err(NULL, game, 17, ERR_MAP_DISALLOW);
+		exit_err(NULL, game, 24, ERR_MAP_DISALLOW);
 	if (!ft_strchr(pattern, map[j][i - 1])
 		|| !ft_strchr(pattern, map[j][i + 1])
 		|| !ft_strchr(pattern, map[j - 1][i])

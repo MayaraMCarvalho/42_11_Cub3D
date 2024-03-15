@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 22:19:50 by macarval          #+#    #+#             */
-/*   Updated: 2024/03/14 19:01:22 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/03/15 19:46:34 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,7 @@ void	inicialize(t_data *game);
 
 /* data.c */
 void	validate_map(t_data *game);
-void	validate_extension(char *file);
+void	validate_extension(char *file, t_data *game);
 void	validate_open(char *file, t_data *game);
 void	get_data(char *argv[], t_data *game);
 int		validate_errors(t_data *game, int j, int i);
@@ -157,6 +157,8 @@ int		validate_errors(t_data *game, int j, int i);
 void	draw(t_data *game);
 void	put_pixel_img(t_img *img, int x, int y, int color);
 void	draw_background(t_img *img, int color, char local);
+void	draw_walls(t_data *game, t_point start, t_point end, int color);
+
 
 /* event.c */
 int		key_press(int key, t_data *game);
@@ -172,14 +174,11 @@ void	free_textures(t_data *game);
 void	exit_err(char *line, t_data *game, int exit_code, char *err);
 
 /* h_raycast.c */
-void	set_h_rays(t_raycast *ray, t_player *p);
-void	set_v_rays(t_raycast *ray, t_player *p);
 void	h_rays(t_raycast *ray, t_player *p, t_map map);
 void	v_rays(t_raycast *ray, t_player *p, t_map map);
 
 /* maps.c */
 void	get_map(t_data *game);
-void	alloc_map(t_data *game);
 void	process_map(t_data *game, int final_set);
 char	*get_init(t_data *game, int final_set);
 int		check_neighbors(t_data *game, int j, int i, char *pattern);
@@ -196,25 +195,21 @@ int		get_textures(t_data *game, char **split);
 int		set_variables(t_data *game, char **split, char *line);
 
 /* raycast_walls.c */
-int		get_guide(t_raycast *ray);
 void	get_walls(t_data *game, t_raycast *ray);
-void	set_3d_cast(t_data *game, t_newRay *new, t_raycast *ray);
-void	draw_rectangle(t_data *game, t_point start, t_point end, int guide);
 
 /* raycast.c*/
 void	raycast(t_data *game);
-int		dist(int x1, int y1, int x2, int y2);
 
 /* textures.c */
 int		convert_color(t_color color);
-// t_tex	define_texture(t_data *game, int guide);
 void	get_data_textures(t_data *game, t_tex *tex);
-int		get_pixel_color(t_data *game, int x, int y, int guide);
+int		pixel_color(t_tex *tex, int *pixel);
+void	set_pixel_texture(t_raycast *ray);
+
 
 /* util.c */
 char	*strchr_rev(const char *str, int c);
 int		strcmp_mod(const char *s1, const char *s2);
-void	terminate(t_data *game);
 
 /* window.c */
 void	init_window(t_data *game);

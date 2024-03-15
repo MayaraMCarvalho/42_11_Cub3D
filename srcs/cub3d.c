@@ -6,14 +6,12 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 22:15:03 by macarval          #+#    #+#             */
-/*   Updated: 2024/03/11 19:18:24 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/03/15 19:01:33 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-// talvez mandar uma struct para validate_file e assim setar qualquer
-// informação necessária do mapa
 int	main(int argc, char *argv[])
 {
 	t_data	game;
@@ -22,8 +20,7 @@ int	main(int argc, char *argv[])
 	if (argc != 2 || argv[1][0] == '\0')
 	{
 		printf("Enter a valid file\n");
-		printf(ERR_ARG);
-		exit (1);
+		exit_err(NULL, &game, 1, ERR_ARG);
 	}
 	else
 	{
@@ -37,6 +34,7 @@ int	main(int argc, char *argv[])
 
 void	inicialize(t_data *game)
 {
+	game->file_name = NULL;
 	game->info.north.file = NULL;
 	game->info.south.file = NULL;
 	game->info.west.file = NULL;

@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 10:03:34 by macarval          #+#    #+#             */
-/*   Updated: 2024/03/14 19:00:31 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/03/15 18:59:53 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,10 @@ int	key_press(int key, t_data *game)
 int	key_press_esc(int key, t_data *game)
 {
 	if (key == ESC_KEY)
+	{
+		game->exit_code = 0;
 		close_window(game);
+	}
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 16:58:34 by macarval          #+#    #+#             */
-/*   Updated: 2024/03/07 17:48:37 by macarval         ###   ########.fr       */
+/*   Updated: 2024/03/12 12:12:02 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	process_settings(t_data *game)
 		if (strcmp_mod(line, "\n"))
 			control += process_line(line, game);
 		free(line);
+		line = NULL;
 		if (control < 6)
 			line = get_next_line(game->fd);
 	}

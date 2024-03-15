@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   validation.c                                       :+:      :+:    :+:   */
+/*   data.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 09:00:14 by macarval          #+#    #+#             */
-/*   Updated: 2024/03/07 18:12:59 by macarval         ###   ########.fr       */
+/*   Updated: 2024/03/12 11:55:47 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	get_data(char *argv[], t_data *game)
 {
 	int		final_set;
 
-	validate_extension(argv[1]);
+	validate_extension(argv[1], game);
 	validate_open(argv[1], game);
 	final_set = process_settings(game);
 	process_map(game, final_set);
@@ -28,7 +28,7 @@ void	get_data(char *argv[], t_data *game)
 	get_data_textures(game, &game->info.east);
 }
 
-void	validate_extension(char *file)
+void	validate_extension(char *file, t_data *game)
 {
 	char	*extension;
 
@@ -36,8 +36,7 @@ void	validate_extension(char *file)
 	if (strcmp_mod(extension, ".cub"))
 	{
 		printf("%s: Extension not supported\n", file);
-		printf(ERR_ARG);
-		exit (4);
+		exit_err(NULL, game, 22, ERR_ARG);
 	}
 }
 
@@ -46,12 +45,7 @@ void	validate_open(char *file, t_data *game)
 	game->file_name = ft_strjoin("maps/", file);
 	game->fd = open(game->file_name, O_RDONLY);
 	if (game->fd == -1)
-	{
-		free(game->file_name);
-		perror(file);
-		printf(ERR_ARG);
-		exit (5);
-	}
+		exit_err(NULL, game, 23, ERR_ARG);
 }
 
 void	validate_map(t_data *game)

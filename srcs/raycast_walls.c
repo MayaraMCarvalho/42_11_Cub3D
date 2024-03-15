@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 17:50:49 by joapedr2          #+#    #+#             */
-/*   Updated: 2024/03/15 19:41:32 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/03/15 19:52:29 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	find_direction(t_data *game, t_raycast *ray)
 	if (ray->hor[2] < ray->ver[2])
 	{
 		ray->distance = ray->hor[2] / SIZE;
-			ray->tex = game->info.south;
+		ray->tex = game->info.south;
 		if (ray->ang < M_PI)
 			ray->tex = game->info.north;
 	}

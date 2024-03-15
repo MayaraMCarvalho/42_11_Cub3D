@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 22:19:50 by macarval          #+#    #+#             */
-/*   Updated: 2024/03/15 19:46:34 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/03/15 19:51:00 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,6 @@ typedef struct s_raycast
 	t_tex	tex;
 }	t_raycast;
 
-
 typedef struct s_color
 {
 	int	r;
@@ -159,7 +158,6 @@ void	put_pixel_img(t_img *img, int x, int y, int color);
 void	draw_background(t_img *img, int color, char local);
 void	draw_walls(t_data *game, t_point start, t_point end, int color);
 
-
 /* event.c */
 int		key_press(int key, t_data *game);
 int		verify_key(int key, t_data *game);
@@ -205,7 +203,6 @@ int		convert_color(t_color color);
 void	get_data_textures(t_data *game, t_tex *tex);
 int		pixel_color(t_tex *tex, int *pixel);
 void	set_pixel_texture(t_raycast *ray);
-
 
 /* util.c */
 char	*strchr_rev(const char *str, int c);

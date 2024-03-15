@@ -3,7 +3,7 @@ NAME			= cub3D
 CFLAGS			= -g3 -g -Wall -Werror -Wextra
 LFLAGS			= -lft -lmlx -lX11 -lXext -lm -MMD -MP
 INCLUDES		= -I./includes -I$(LIBFT_INC) -I$(MLX_PATH)
-LIBS			= -L./libs/libft -L./libs/minilibx
+LIBS			= -L./libs/libft -L./libs/.minilibx
 
 # -fsanitize=address -lbsd verificar a necessidade dessas flags
 
@@ -13,7 +13,7 @@ LIBFT_INC		= $(LIBFT_PATH)/includes
 LIBFT			= $(LIBFT_PATH)/libft.a
 
 #minilibx
-MLX_PATH		= ./libs/minilibx
+MLX_PATH		= ./libs/.minilibx
 MLX_LINUX		= $(MLX_PATH)/libmlx_Linux.a
 MLX				= $(MLX_PATH)/libmlx.a
 
@@ -84,8 +84,8 @@ fclean: clean
 
 re: fclean all
 
-val:
-	valgrind --leak-check=full --show-leak-kinds=all -q ./$(NAME)
+val: all
+	valgrind --leak-check=full --show-leak-kinds=all -q ./$(NAME) 42.cub
 
 coffee:
 	@make -sC $(LIBFT_PATH) coffee

@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 15:53:37 by macarval          #+#    #+#             */
-/*   Updated: 2024/03/15 19:40:21 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/03/15 19:52:49 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	set_pixel_texture(t_raycast *ray)
 	if (ray->ver[2] < ray->hor[2])
 	{
 		precision = (int)((ray->ver[1] / SIZE) * 100) % 100;
-		ray->pixel[0]= ray->tex.width * precision / 100;
+		ray->pixel[0] = ray->tex.width * precision / 100;
 		if (ray->ang < PI / 2 || ray->ang > 3 * PI / 2)
 			ray->pixel[0] = ray->tex.width - ray->pixel[0] - 1;
 	}

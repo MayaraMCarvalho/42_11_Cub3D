@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 09:03:43 by macarval          #+#    #+#             */
-/*   Updated: 2024/03/15 19:43:11 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/03/15 19:53:11 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ char	*get_init(t_data *game, int final_set)
 	}
 	if (line && (line[0] == 'F' || line[0] == 'C'))
 		exit_err(line, game, 14, ERR_COLOR);
-	if (line && (line[0] == 'N' || line[0] == 'S' || line[0] == 'W' || line[0] == 'E'))
+	if (line && (line[0] == 'N' || line[0] == 'S'
+			|| line[0] == 'W' || line[0] == 'E'))
 		exit_err(line, game, 15, ERR_TEX);
 	game->map.init += final_set;
 	return (line);

@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 10:03:34 by macarval          #+#    #+#             */
-/*   Updated: 2024/03/15 18:59:53 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/03/15 19:51:51 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,4 +80,3 @@ int	verify_key(int key, t_data *game)
 	update_ang(key, player);
 	return (TRUE);
 }
-

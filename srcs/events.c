@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 10:03:34 by macarval          #+#    #+#             */
-/*   Updated: 2024/03/16 00:54:13 by macarval         ###   ########.fr       */
+/*   Updated: 2024/03/16 14:10:46 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,11 @@ void	player_move(t_data *game, float next_x, float next_y)
 	t_player	*player;
 
 	player = &(game)->player;
-	if (game->map.map[player->map[1]][(int)(next_x) >> 5] != '1')
+	if (game->map.map[player->map[1]][(int)(next_x) >> 5] != '1'
+		&& game->map.map[(int)(next_y) >> 5][player->map[0]] != '1')
 	{
 		player->x = next_x;
 		player->map[0] = (int)(next_x) >> 5;
-	}
-	if (game->map.map[(int)(next_y) >> 5][player->map[0]] != '1')
-	{
 		player->y = next_y;
 		player->map[1] = (int)(next_y) >> 5;
 	}

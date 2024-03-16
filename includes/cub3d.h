@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 22:19:50 by macarval          #+#    #+#             */
-/*   Updated: 2024/03/16 00:04:37 by macarval         ###   ########.fr       */
+/*   Updated: 2024/03/16 00:54:50 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,5 +213,6 @@ void	process_error(char *line, t_data *game, char **split);
 void	init_window(t_data *game);
 void	exec_window(t_data *game);
 int		close_window(t_data *data);
+int		handle_mouse(int button, int x, int y, t_data *game);
 
 #endif

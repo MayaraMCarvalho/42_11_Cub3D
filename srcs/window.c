@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   window.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
+/*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 15:17:55 by macarval          #+#    #+#             */
-/*   Updated: 2024/03/15 19:01:01 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/03/16 00:54:28 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,25 @@ void	exec_window(t_data *game)
 	mlx_hook(game->win, KeyPress, KeyPressMask, &key_press, game);
 	mlx_hook(game->win, KeyRelease, KeyReleaseMask, &key_press_esc, game);
 	mlx_hook(game->win, DestroyNotify, NoEventMask, &close_window, game);
+	mlx_mouse_hook(game->win, &handle_mouse, game);
 	mlx_loop(game->mlx);
+}
+
+int	handle_mouse(int button, int x, int y, t_data *game)
+{
+	if (button == 1 && y)
+	{
+		if (x <= WIN_W / 2)
+			game->player.ang += 0.1;
+		else
+			game->player.ang -= 0.1;
+		if (game->player.ang < 0)
+			game->player.ang += 2 * M_PI;
+		if (game->player.ang > (2 * M_PI -0.00001))
+			game->player.ang -= 2 * M_PI;
+		draw(game);
+	}
+	return (0);
 }
 
 int	close_window(t_data	*game)

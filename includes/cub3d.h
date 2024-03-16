@@ -6,7 +6,7 @@
 /*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 22:19:50 by macarval          #+#    #+#             */
-/*   Updated: 2024/03/15 19:51:00 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/03/15 20:08:34 by joapedr2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@
 # define FOV		66
 # define MAX_RAYS	600
 # define SIZE		32
-# define SPEED		3
+# define SPEED		5
 
 /* Walls */
 # define PI			3.14159265359

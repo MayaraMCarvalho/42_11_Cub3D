@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 15:58:38 by macarval          #+#    #+#             */
-/*   Updated: 2024/03/12 11:56:43 by macarval         ###   ########.fr       */
+/*   Updated: 2024/03/15 23:01:50 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	exit_err(char *line, t_data *game, int exit_code, char *err)
 	if (errno == -1)
 		perror("general error");
 	else
-		ft_putendl_fd(err, 2);
+		ft_putstr_fd(err, 2);
 	if (line)
 		free(line);
 	if (game)

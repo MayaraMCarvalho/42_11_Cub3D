@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
+/*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 22:19:50 by macarval          #+#    #+#             */
-/*   Updated: 2024/03/15 19:51:00 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/03/16 00:04:37 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,14 +199,15 @@ void	get_walls(t_data *game, t_raycast *ray);
 void	raycast(t_data *game);
 
 /* textures.c */
-int		convert_color(t_color color);
 void	get_data_textures(t_data *game, t_tex *tex);
 int		pixel_color(t_tex *tex, int *pixel);
 void	set_pixel_texture(t_raycast *ray);
 
 /* util.c */
+int		convert_color(t_color color);
 char	*strchr_rev(const char *str, int c);
 int		strcmp_mod(const char *s1, const char *s2);
+void	process_error(char *line, t_data *game, char **split);
 
 /* window.c */
 void	init_window(t_data *game);

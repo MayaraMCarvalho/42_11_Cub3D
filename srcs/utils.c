@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 09:17:12 by macarval          #+#    #+#             */
-/*   Updated: 2024/03/12 10:53:18 by macarval         ###   ########.fr       */
+/*   Updated: 2024/03/16 00:04:22 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,28 @@ char	*strchr_rev(const char *str, int c)
 			return ((char *)str);
 	}
 	return (NULL);
+}
+
+void	process_error(char *line, t_data *game, char **split)
+{
+	if (!split[0])
+	{
+		free_split(&split);
+		exit_err(line, game, 25, ERR_EMPTY);
+	}
+	else if (!split[1])
+	{
+		free_split(&split);
+		exit_err(line, game, 7, ERR_SET);
+	}
+	else if (split[2])
+	{
+		free_split(&split);
+		exit_err(line, game, 8, ERR_MORE);
+	}
+}
+
+int	convert_color(t_color color)
+{
+	return ((color.r << 16) + (color.g << 8) + color.b);
 }

@@ -1,7 +1,7 @@
-NO ./textures/library_NO.xpm
-SO ./textures/library_SO.xpm
-WE ./textures/library_WE.xpm
-EA ./textures/library_EA.xpm
+NO ./textures/metal80.xpm
+SO ./textures/pedra_clara80.xpm
+WE ./textures/pedra80.xpm
+EA ./textures/pedra_azul80.xpm
 
 F 120,100,60
 C 170,150,110

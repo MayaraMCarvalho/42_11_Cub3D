@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
+/*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 15:53:37 by macarval          #+#    #+#             */
-/*   Updated: 2024/03/15 19:52:49 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/03/16 00:04:18 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,10 @@ void	get_data_textures(t_data *game, t_tex *tex)
 			&tex->tex.line_len, &tex->tex.endian);
 }
 
-int	convert_color(t_color color)
-{
-	return ((color.r << 16) + (color.g << 8) + color.b);
-}
-
 int	pixel_color(t_tex *tex, int *pixel)
 {
 	int		index;
-	int		red;
-	int		green;
-	int		blue;
+	t_color	color;
 
 	if (pixel[0] > tex->width)
 		pixel[0] %= tex->width;
@@ -41,10 +34,10 @@ int	pixel_color(t_tex *tex, int *pixel)
 	index = (pixel[1] * tex->tex.line_len) + (pixel[0] * (tex->tex.bpp / 8));
 	if (index < 0)
 		index = 0;
-	red = tex->tex.addr[index + 2];
-	green = tex->tex.addr[index + 1];
-	blue = tex->tex.addr[index];
-	return ((red << 16) + (green << 8) + blue);
+	color.r = tex->tex.addr[index + 2];
+	color.g = tex->tex.addr[index + 1];
+	color.b = tex->tex.addr[index];
+	return (convert_color(color));
 }
 
 void	set_pixel_texture(t_raycast *ray)

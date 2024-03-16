@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 16:58:34 by macarval          #+#    #+#             */
-/*   Updated: 2024/03/12 12:12:02 by macarval         ###   ########.fr       */
+/*   Updated: 2024/03/15 23:56:46 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,7 @@ int	process_line(char *line, t_data *game)
 
 	control = 0;
 	split = ft_split(line, ' ');
-	if (!split[1])
-	{
-		free_split(&split);
-		exit_err(line, game, 7, ERR_SET);
-	}
-	if (split[2])
-	{
-		free_split(&split);
-		exit_err(line, game, 8, ERR_MORE);
-	}
+	process_error(line, game, split);
 	control = set_variables(game, split, line);
 	free_split(&split);
 	if (control == 1)

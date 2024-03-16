@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 09:00:14 by macarval          #+#    #+#             */
-/*   Updated: 2024/03/12 11:55:47 by macarval         ###   ########.fr       */
+/*   Updated: 2024/03/15 23:53:33 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ void	validate_extension(char *file, t_data *game)
 	extension = ft_strrchr(file, '.');
 	if (strcmp_mod(extension, ".cub"))
 	{
-		printf("%s: Extension not supported\n", file);
+		ft_putstr_fd(file, 2);
+		ft_putstr_fd(": Extension not supported\n", 2);
 		exit_err(NULL, game, 22, ERR_ARG);
 	}
 }
@@ -45,7 +46,10 @@ void	validate_open(char *file, t_data *game)
 	game->file_name = ft_strjoin("maps/", file);
 	game->fd = open(game->file_name, O_RDONLY);
 	if (game->fd == -1)
+	{
+		perror(file);
 		exit_err(NULL, game, 23, ERR_ARG);
+	}
 }
 
 void	validate_map(t_data *game)

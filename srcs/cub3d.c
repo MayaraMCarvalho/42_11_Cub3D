@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joapedr2 < joapedr2@student.42sp.org.br    +#+  +:+       +#+        */
+/*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 22:15:03 by macarval          #+#    #+#             */
-/*   Updated: 2024/03/15 19:01:33 by joapedr2         ###   ########.fr       */
+/*   Updated: 2024/03/15 22:58:41 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	main(int argc, char *argv[])
 	inicialize(&game);
 	if (argc != 2 || argv[1][0] == '\0')
 	{
-		printf("Enter a valid file\n");
+		ft_putendl_fd("Enter a valid file", 2);
 		exit_err(NULL, &game, 1, ERR_ARG);
 	}
 	else

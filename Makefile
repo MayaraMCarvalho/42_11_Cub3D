@@ -85,7 +85,7 @@ fclean: clean
 re: fclean all
 
 val: all
-	valgrind --leak-check=full --show-leak-kinds=all -q ./$(NAME) 42.cub
+	valgrind --leak-check=full --show-leak-kinds=all --suppressions=./mlx_mouse_hide.supp -q ./$(NAME) 42.cub
 
 coffee:
 	@make -sC $(LIBFT_PATH) coffee

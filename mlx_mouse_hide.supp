@@ -1,0 +1,31 @@
+{
+   <MiniLibX>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:mlx_mouse_hide
+}
+{
+   <dl>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:_dl_open
+   ...
+}
+{
+   <X11>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:_XOpenLC
+   ...
+}
+{
+   <X11>
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:XrmGetStringDatabase
+   ...
+}

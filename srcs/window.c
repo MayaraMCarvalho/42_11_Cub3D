@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 15:17:55 by macarval          #+#    #+#             */
-/*   Updated: 2024/03/16 00:54:28 by macarval         ###   ########.fr       */
+/*   Updated: 2024/03/17 15:46:44 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ int	close_window(t_data	*game)
 {
 	int	code;
 
+	code = 0;
 	if (game)
 	{
 		code = game->exit_code;
